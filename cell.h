@@ -1,7 +1,7 @@
 #ifndef CELL_H
 #define CELL_H
 
-class Cell {
+struct Cell {
     int row, col;
     int id;
     char type;

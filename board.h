@@ -1,18 +1,24 @@
 #ifndef BOARD_H
 #define BOARD_H
-
-#include <vector>
-#include "wrapper_board.h"
 #include "cell.h"
+#include <iostream>
+#include <vector>
 
+class Block;
 class BlockInfo;
-class BasicBoard : WrapperBoard {
-    std::vector<std::vector<Cell>> board;
-    std::vector<BlockInfo>;
+
+// TODO: attach textdisplay and graphics pointers
+class Board {
+    std::vector<std::vector<Cell>> theBoard;
     int width, height;
-  public:
-    void drop(Block block);
-    void translate(int x, int y);
+    vector<BlockInfo> activeBlocks;
+
+    public:
+    void drop(Block &block);
+    int clearLines();
+    void reverse();
+
+    friend std::ostream &operator<<(std::ostream &out, const Board &b);
 };
 
 #endif
