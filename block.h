@@ -2,15 +2,25 @@
 #define BLOCK_H
 
 #include <vector>
+#include <string>
 
 class Block {
-    int points;
+  protected:    // Should be private ?
     int x, y;
-    std::vector<Cell> cells;
+    int w, h;   // width and height of bounding rectangle
+    int level;
+    std::vector<std::vector<bool>> cells;
   public:
-    virtual bool canRotate(char dir) = 0;
-    virtual bool canTranslate(char dir) = 0;
-    virtual void rotate(char dir) = 0;
-};
+    Block(int x, int y, int w, int h, int level);
+    virtual ~Block();
+    bool rotate(std::string dir);
+    bool translate(int x, int y);
 
+    // getters
+    int getX();
+    int getY();
+
+
+    friend std::ostream &operator<<(std::ostream &out, const Block& b);
+};
 #endif
