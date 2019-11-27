@@ -3,18 +3,20 @@
 #include "cell.h"
 #include <iostream>
 #include <vector>
+#include "blocks/block.h"
+#include "block_info.h"
 
-class Block;
-class BlockInfo;
 
 // TODO: attach textdisplay and graphics pointers
 class Board {
     std::vector<std::vector<Cell>> theBoard;
     int width, height;
-    vector<BlockInfo> activeBlocks;
+    std::vector<BlockInfo> activeBlocks;
 
     public:
-    void drop(Block &block);
+    void init(int width, int height);
+    bool canTranslateDown(Block &block, int x, int y);
+    void drop(Block &block, char type, int ID);
     int clearLines();
     void reverse();
 
