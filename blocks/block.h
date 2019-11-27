@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+class Board;
 class Block {
   protected:    // Should be private ?
     int x, y;
@@ -21,7 +22,8 @@ class Block {
     int getX();
     int getY();
 
-
+    // should we use friend class ?
+    friend class Board;
     friend std::ostream &operator<<(std::ostream &out, const Block& b);
 };
 #endif

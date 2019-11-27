@@ -25,9 +25,9 @@ int Block::getY() {
 
 bool Block::rotate(string dir) {
     // check if rotation is valid
-    int x2 = x + h;
-    int y2 = y - w;
-    if (x2 < 0 || y2 < 0 || x2 > 11 || y2 > 18) {
+    int x2 = x + h - 1;
+    int y2 = y - w + 1;
+    if (y2 < 0 || x2 > 11) {
         return false;
     }
 
@@ -47,7 +47,6 @@ bool Block::rotate(string dir) {
                 swap(cells[i][j], cells[i][w-j-1]);
             }
         }
-
     } else {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h/2; j++) {
@@ -65,7 +64,7 @@ bool Block::translate(int x, int y) {
     if (x2 >= 0 && y2 - (h-1) >= 0 && x2 + w <= 11 && y2 <= 18) {
         this->x = x2;
         this->y = y2;
-        return true;        
+        return true;
     }
     return false;
 }
