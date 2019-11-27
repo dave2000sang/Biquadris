@@ -1,8 +1,8 @@
 #include "block.h"
 #include <iostream>
 using namespace std;
- 
-Block::Block(int x, int y, int w, int h, int level): x{x}, y{y}, w{w}, h{h}, level{level} {
+
+Block::Block(int x, int y, int w, int h, int level, char type) : x{x}, y{y}, w{w}, h{h}, level{level}, type{type} {
     // initialize with empty cells
     for (int i = 0; i < h; i++) {
         vector<bool> v;
