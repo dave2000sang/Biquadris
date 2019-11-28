@@ -5,12 +5,11 @@ include "block.h"
 #include <iostream>
 using namespace std;
 
-class LevelZero : BlockFactory {
+class LevelZero : public BlockFactory {
     ifstream in;
-
   public:
     LevelZero(string fileName);
-    Block* createBlock() override;
+    Block createBlock() override;
 };
 
 #endif

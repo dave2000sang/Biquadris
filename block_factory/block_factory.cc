@@ -4,6 +4,6 @@ void BlockFactory::setFile(string fileName){
     this->file = fileName;
 }
 
-void BlockFactory::noRandom(){}
+void BlockFactory::setRandom(){}
 
 

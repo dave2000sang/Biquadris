@@ -1,23 +1,30 @@
 #include "level_two.h"
+#include "blocks/i_block.h"
+#include "blocks/j_block.h"
+#include "blocks/l_block.h"
+#include "blocks/o_block.h"
+#include "blocks/s_block.h"
+#include "blocks/t_block.h"
+#include "blocks/z_block.h"
 #include <cstdlib>
 using namespace std;
 
-Block* LevelTwo::createBlock() override{
+Block LevelTwo::createBlock() override{
     int num = rand() % 7;      // generates number from 0 to 6 inclusive
 
     if(num < 1){                // creates the appropriate block
-        return new Block{'I', 2};
+        return IBlock{1};
     } else if(num < 2){
-        return new Block{'J', 2};
+        return JBlock{1};
     } else if(num < 3){
-        return new Block{'L', 2};
+        return LBlock{1};
     } else if(num < 4){
-        return new Block{'O', 2};
+        return OBlock{1};
     } else if(num < 5){
-        return new Block{'T', 2};
+        return TBlock{1};
     } else if(num < 6){
-        return new Block{'S', 2};
+        return SBlock{1};
     } else{
-        return new Block{'Z', 2};
+        return ZBlock{1};
     }
 }

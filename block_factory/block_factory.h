@@ -6,9 +6,9 @@
 class BlockFactory {
     std::string file;
   public:
-    void setFile(string fileName);
-    virtual Block* createBlock() = 0;
-    virtual void noRandom();
+    virtual Block createBlock() = 0;
+    virtual void setFile(string fileName);
+    virtual void setRandom();
 };
 
 #endif

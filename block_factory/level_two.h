@@ -4,9 +4,9 @@
 #include "block.h"
 using namespace std;
 
-class LevelTwo : BlockFactory {
+class LevelTwo : public BlockFactory {
   public:
-    Block* createBlock() override;
+    Block createBlock() override;
 };
 
 #endif
