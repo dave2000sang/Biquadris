@@ -17,6 +17,7 @@ class Board {
     void init(int width, int height);
     bool canTranslateDown(Block &block, int x, int y);
     void drop(Block &block, char type, int ID);
+    bool isFull(std::vector<Cell> &row);
     int clearLines();
     void reverse();
 
