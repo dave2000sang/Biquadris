@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-OBlock::OBlock(int x, int y, int level) : Block(x, y, 2, 2, level, 'O') {
+OBlock::OBlock(int level) : Block(2, 2, level, 'O') {
     cells[0][0] = true;
     cells[0][1] = true;
     cells[1][0] = true;

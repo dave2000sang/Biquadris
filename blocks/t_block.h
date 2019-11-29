@@ -7,7 +7,7 @@
 
 class TBlock : public Block {
   public:
-    TBlock(int x, int y, int level);
+    TBlock(int level);
     ~TBlock();
 };
 #endif

@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-Block::Block(int x, int y, int w, int h, int level, char type) : x{x}, y{y}, w{w}, h{h}, level{level}, type{type} {
+Block::Block(int w, int h, int level, char type, int x, int y) : x{x}, y{y}, w{w}, h{h}, level{level}, type{type} {
     // initialize with empty cells
     for (int i = 0; i < h; i++) {
         vector<bool> v;
@@ -85,4 +85,8 @@ ostream &operator<<(ostream &out, const Block &b) {
         out << endl;
     }
     return out;
+}
+
+char Block::getType() {
+    return type;
 }

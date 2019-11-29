@@ -7,7 +7,7 @@
 
 class IBlock : public Block {
   public:
-    IBlock(int x, int y, int level);
+    IBlock(int level);
     ~IBlock();
 };
 #endif
