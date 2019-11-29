@@ -10,7 +10,7 @@ void Board::init(int width, int height) {
     theBoard = vector<vector<Cell>> (height);
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            theBoard[i].emplace_back(Cell{i, j, 0, '-'}); // TODO: change to ' '
+            theBoard[i].emplace_back(Cell{i, j, 0, ' '});
         }
     }
 }
@@ -21,7 +21,7 @@ bool Board::canTranslateDown(Block &block, int x, int y) {
     }
     for (int i = 0; i < block.h; ++i) {
         for (int j = 0; j < block.w; ++j) {
-            if (block.cells[i][j] && (theBoard[i + y + 1][j + x].type != '-')) {  // TODO: change to ' '
+            if (block.cells[i][j] && (theBoard[i + y + 1][j + x].type != ' ')) {
                 return false;
             }
         }
@@ -54,14 +54,47 @@ void Board::drop(Block &block, char type, int ID) { // TODO: get type from block
     }
 }
 
+bool Board::isFull(vector<Cell> &row) {
+    for (auto cell : row) {
+        if (cell.type == ' ') return false;
+    }
+    return true;
+}
+
 int Board::clearLines() {
     // TODO
+    int rowsCleared = 0;
+
+    for (int i = 0; i < height; ++i) {
+        if (isFull(theBoard[i])) {
+
+            // rows are shifted down
+            vector<vector<Cell>> tempBoard = this->theBoard;
+            theBoard[i].clear(); // possible memory leak
+            for (int j = 0; j < i; ++j) {
+                theBoard[j+1] = tempBoard[j];
+            }
+
+            // first row becomes an empty row
+            for (auto &cell : theBoard[0]) {
+                cell.type = ' ';
+            }
+
+            // increment rows cleared
+            rowsCleared++;
+        }
+    }
+    return rowsCleared;
 }
 
 ostream &operator<<(std::ostream &out, const Board &b) {
     for (auto row : b.theBoard) {
         for (auto cell : row) {
-            out << cell.type;
+            if (cell.type == ' ') {
+                out << '-';
+            } else {
+                out << cell.type;
+            }
         }
         out << endl;
     }
