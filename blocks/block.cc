@@ -13,6 +13,8 @@ Block::Block(int w, int h, int level, char type, int x, int y) : x{x}, y{y}, w{w
     }
 }
 
+Block::Block(){}
+
 Block::~Block() {}
 
 int Block::getX() {
@@ -21,6 +23,18 @@ int Block::getX() {
 
 int Block::getY() {
     return y;
+}
+
+int Block::getW() {
+    return w;
+}
+
+int Block::getH() {
+    return h;
+}
+
+vector<vector<bool>> Block::getCells(){
+    return cells;
 }
 
 bool Block::rotate(string dir) {

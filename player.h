@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include "board.h"
-#include "block_factory.h"
+#include "block_factory/block_factory.h"
 #include "blocks/block.h"
 #include "block_info.h"
 #include <memory>
@@ -11,27 +11,31 @@
 using namespace std;
 
 class Player {
-    unique_ptr<Board> board;
-    unique_ptr<BlockFactory> blockFactory;
-    Block nextBlock;
-    vector<BlockInfo> activeBlocks;
-    string levelZeroFile;
-    int score, level, blockID, starCounter;
+    
     
     // Helper functions
     int getScore(int linesCleared);
     void updateFactory();
 
   public:
+    //public for testing
+    unique_ptr<Board> board;
+    unique_ptr<BlockFactory> blockFactory;
+    string levelZeroFile;
+    Block nextBlock;
+    vector<BlockInfo> activeBlocks;
+    int score, level, blockID, starCounter;
+
+
     Player(string fileName);
-    void blockIsValid();
+    bool blockIsValid();
     void rotate(string dir);
     void translate(int x, int y);
     void levelUp();
     void levelDown();
     void noRandom(string file);
     void setRandom();
-    void replaceBlock(char Block);
+    void replaceBlock(char c);
     void drop();
 };
 

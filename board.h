@@ -22,6 +22,8 @@ class Board {
     std::vector<int> getIDs(); // unique IDs without 0
     void init(int width, int height);
     void reverse();
+    std::vector<std::vector<bool>> boardSpace();
+    void dropStar();
 
     // helpers
     bool isRowFull(std::vector<Cell> &row);

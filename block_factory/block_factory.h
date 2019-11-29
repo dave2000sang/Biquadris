@@ -18,6 +18,7 @@ class BlockFactory {
     virtual Block createBlock() = 0;
     virtual void setFile(std::string fileName);
     virtual void setRandom();
+    Block specificBlock(char c, int level);
 };
 
 #endif

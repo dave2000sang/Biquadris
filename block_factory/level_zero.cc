@@ -19,16 +19,16 @@ Block LevelZero::createBlock() {
     if(c == 'I'){
         return IBlock{0};
     } else if(c == 'J'){
-        return new JBlock{0};
+        return JBlock{0};
     } else if(c == 'L'){
-        return new LBlock{0};
+        return LBlock{0};
     } else if(c == 'O'){
-        return new OBlock{0};
+        return OBlock{0};
     } else if(c == 'S'){
-        return new SBlock{0};
+        return SBlock{0};
     } else if(c == 'T'){
-        return new TBlock{0};
+        return TBlock{0};
     } else if(c == 'Z'){
-        return new ZBlock{0};
+        return ZBlock{0};
     }
 }
