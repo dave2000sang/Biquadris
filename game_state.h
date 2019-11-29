@@ -3,20 +3,25 @@
 
 #include <string>
 #include "player.h"
+#include "blocks/block.h"
+#include <memory>
 
 class GameState {
-    Player p1, p2;
+    std::unique_ptr<Player> p1, p2;
     int turn;
     // GameDisplay *gd;
   public:
-    void rotate(int reps, char dir);
-    void translate(int reps, char dir);
-    void changeLevel(int change);
+    GameState();
+    void rotate(int reps, std::string dir);
+    void translate(int reps, int x, int y);
+    void drop();
+    void levelUp(int multiplier);
+    void levelDown(int multiplier);
     void noRandom(std::string file);
     void setRandom();
-    void setSequence(std::string file);
-    void replaceBlock();
+    void replaceBlock(char block);
     void restart();
+    void updateTurn();
 };
 
 #endif
