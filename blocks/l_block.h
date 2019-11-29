@@ -7,7 +7,7 @@
 
 class LBlock : public Block {
   public:
-    LBlock(int x, int y, int level);
+    LBlock(int level);
     ~LBlock();
 };
 #endif

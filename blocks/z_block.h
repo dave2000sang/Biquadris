@@ -7,7 +7,7 @@
 
 class ZBlock : public Block {
   public:
-    ZBlock(int x, int y, int level);
+    ZBlock(int level);
     ~ZBlock();
 };
 #endif

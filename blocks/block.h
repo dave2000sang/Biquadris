@@ -13,7 +13,7 @@ class Block {
     char type;
     std::vector<std::vector<bool>> cells;
   public:
-    Block(int x, int y, int w, int h, int level, char type);
+    Block(int w, int h, int level, char type, int x=0, int y=3);
     virtual ~Block();
     bool rotate(std::string dir);
     bool translate(int x, int y);
@@ -21,9 +21,11 @@ class Block {
     // getters
     int getX();
     int getY();
+    char getType();
 
     // should we use friend class ?
     friend class Board;
+    friend class Player;
     friend std::ostream &operator<<(std::ostream &out, const Block& b);
 };
 #endif
