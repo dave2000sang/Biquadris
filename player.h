@@ -18,13 +18,14 @@ class Player {
     void updateFactory();
 
   public:
-    //public for testing
+    //***************************public for testing
     unique_ptr<Board> board;
     unique_ptr<BlockFactory> blockFactory;
     string levelZeroFile;
     Block nextBlock;
     vector<BlockInfo> activeBlocks;
     int score, level, blockID, starCounter;
+    //***************************public for testing
 
 
     Player(string fileName);
