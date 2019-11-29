@@ -29,7 +29,7 @@ bool Board::canTranslateDown(Block &block, int x, int y) {
     return true;
 }
 
-void Board::drop(Block &block, char type, int ID) { // TODO: get type from block
+int Board::drop(Block &block, char type, int ID) { // TODO: get type from block
     int x = block.x;
     int y = block.y - block.h + 1;
     int w = block.w;
@@ -52,9 +52,12 @@ void Board::drop(Block &block, char type, int ID) { // TODO: get type from block
             }
         }
     }
+
+    // clear full rows and return # of lines cleared
+    return this->clearLines();
 }
 
-bool Board::isFull(vector<Cell> &row) {
+bool Board::isRowFull(vector<Cell> &row) {
     for (auto cell : row) {
         if (cell.type == ' ') return false;
     }
@@ -62,22 +65,24 @@ bool Board::isFull(vector<Cell> &row) {
 }
 
 int Board::clearLines() {
-    // TODO
     int rowsCleared = 0;
 
     for (int i = 0; i < height; ++i) {
-        if (isFull(theBoard[i])) {
+        if (isRowFull(theBoard[i])) {
 
             // rows are shifted down
             vector<vector<Cell>> tempBoard = this->theBoard;
-            theBoard[i].clear(); // possible memory leak
             for (int j = 0; j < i; ++j) {
-                theBoard[j+1] = tempBoard[j];
+                for (int k = 0; k < width; ++k) {
+                    theBoard[j+1][k].id = tempBoard[j][k].id;
+                    theBoard[j+1][k].type = tempBoard[j][k].type;
+                }
             }
 
             // first row becomes an empty row
             for (auto &cell : theBoard[0]) {
                 cell.type = ' ';
+                cell.id = 0;
             }
 
             // increment rows cleared
@@ -85,6 +90,23 @@ int Board::clearLines() {
         }
     }
     return rowsCleared;
+}
+
+vector<int> Board::getIDs() {
+    // insert ids to a set
+    set<int> idSet;
+    for (auto row : theBoard) {
+        for (auto cell : row) {
+            idSet.insert(cell.id);
+        }
+    }
+
+    // remove 0 since 0 is the ID of an empty cell
+    idSet.erase(0);
+
+    // convert to a vector
+    vector<int> idVec(idSet.begin(), idSet.end());
+    return idVec;
 }
 
 ostream &operator<<(std::ostream &out, const Board &b) {

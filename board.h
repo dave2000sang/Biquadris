@@ -3,6 +3,8 @@
 #include "cell.h"
 #include <iostream>
 #include <vector>
+#include <set>
+#include <algorithm>
 #include "blocks/block.h"
 #include "block_info.h"
 
@@ -14,12 +16,16 @@ class Board {
     std::vector<BlockInfo> activeBlocks;
 
     public:
+
+    int drop(Block &block, char type, int ID);
+    int clearLines(); // returns # of lines cleared
+    std::vector<int> getIDs(); // unique IDs without 0
     void init(int width, int height);
-    bool canTranslateDown(Block &block, int x, int y);
-    void drop(Block &block, char type, int ID);
-    bool isFull(std::vector<Cell> &row);
-    int clearLines();
     void reverse();
+
+    // helpers
+    bool isRowFull(std::vector<Cell> &row);
+    bool canTranslateDown(Block &block, int x, int y);
 
     friend std::ostream &operator<<(std::ostream &out, const Board &b);
 };
