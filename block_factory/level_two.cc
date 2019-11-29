@@ -1,15 +1,8 @@
 #include "level_two.h"
-#include "blocks/i_block.h"
-#include "blocks/j_block.h"
-#include "blocks/l_block.h"
-#include "blocks/o_block.h"
-#include "blocks/s_block.h"
-#include "blocks/t_block.h"
-#include "blocks/z_block.h"
 #include <cstdlib>
 using namespace std;
 
-Block LevelTwo::createBlock() override{
+Block LevelTwo::createBlock() {
     int num = rand() % 7;      // generates number from 0 to 6 inclusive
 
     if(num < 1){                // creates the appropriate block
