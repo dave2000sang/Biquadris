@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-LBlock::LBlock(int x, int y, int level) : Block(x, y, 3, 2, level, 'L') {
+LBlock::LBlock(int level) : Block(3, 2, level, 'L') {
     cells[0][2] = true;
     cells[1][0] = true;
     cells[1][1] = true;

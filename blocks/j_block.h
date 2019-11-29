@@ -7,7 +7,7 @@
 
 class JBlock : public Block {
   public:
-    JBlock(int x, int y, int level);
+    JBlock(int level);
     ~JBlock();
 };
 #endif

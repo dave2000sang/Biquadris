@@ -7,7 +7,7 @@
 
 class OBlock : public Block {
   public:
-    OBlock(int x, int y, int level);
+    OBlock(int level);
     ~OBlock();
 };
 #endif
