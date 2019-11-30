@@ -23,9 +23,11 @@ Block LevelThree::createBlock() {
         }
     } else{
         char c = in.get();
-        if(in.fail()){
+        if(in.eof()){
             // Restarts from beginning of file if the end is reached
-            this->in.open(file);
+            in.close();
+            in.clear();
+            in.open(this->file);
             c = in.get();
         }
 

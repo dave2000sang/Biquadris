@@ -1,4 +1,5 @@
 #include "level_zero.h"
+#include <iostream>
 using namespace std;
 
 // Constructor sets the file and opens filestream
@@ -10,9 +11,11 @@ LevelZero::LevelZero(string fileName){
 // Reads a char from the filestream and returns corresponding block
 Block LevelZero::createBlock() {
     char c = in.get();
-    if(in.fail()){
+    if(in.eof()){
         // Restarts from beginning of file if the end is reached
-        this->in.open(this->file);
+        in.close();
+        in.clear();
+        in.open(this->file);
         c = in.get();
     }
 

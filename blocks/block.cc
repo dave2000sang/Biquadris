@@ -104,3 +104,7 @@ ostream &operator<<(ostream &out, const Block &b) {
 char Block::getType() {
     return type;
 }
+
+int Block::getLevel() {
+    return level;
+}

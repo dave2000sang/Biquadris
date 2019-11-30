@@ -22,6 +22,7 @@ class Player {
     unique_ptr<BlockFactory> blockFactory;
     string levelZeroFile;
     Block nextBlock;
+    Block nextNextBlock;
     vector<BlockInfo> activeBlocks;
     int score, level, blockID, starCounter;
     //***************************public for testing
@@ -41,6 +42,10 @@ class Player {
     // Getter Methods
     int getScore();
     int getLevel();
+    Block getNextNextBlock();
+
+    // For Testing
+    friend std::ostream &operator<<(std::ostream &out, const Player &p);
 };
 
 #endif

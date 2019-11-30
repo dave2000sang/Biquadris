@@ -5,6 +5,7 @@
 #include "block_factory/level_three.h"
 #include "block_factory/level_four.h"
 #include <exception>
+#include <iostream>
 
 Player::Player(string fileName, GameState * gs): blockID{1}, score{0}, level{0}, starCounter{0}{
     levelZeroFile = fileName;
@@ -12,6 +13,7 @@ Player::Player(string fileName, GameState * gs): blockID{1}, score{0}, level{0},
     board->init(gs);
     blockFactory = make_unique<LevelZero>(fileName);
     nextBlock = blockFactory->createBlock();
+    nextNextBlock = blockFactory->createBlock();
     board->draw(nextBlock, blockID);
 }
 
@@ -90,7 +92,9 @@ void Player::noRandom(string file){
 }
 
 void Player::setRandom(){
+    board->erase(nextBlock);
     blockFactory->setRandom();
+    board->draw(nextBlock, blockID);
 }
 
 void Player::replaceBlock(char c){
@@ -102,38 +106,54 @@ void Player::replaceBlock(char c){
 int Player::getScore(int linesCleared){
     vector<int> activeIds = board->getIDs();
     int score = 0, levelsCleared = 0;
-    bool found = false;
 
-    for(int i = 0; i < activeBlocks.size(); ++i){
-        for(int j = 0; j < activeIds.size(); ++j){
-            if(activeIds[j] == activeBlocks[i].id){
+    cout << "getIDs: ";
+    for(auto anID : activeIds){
+        cout << anID << " ";
+    }
+    cout << endl;
+
+    vector<BlockInfo> newActives;
+    for(auto someBlockInfo : activeBlocks){
+        bool found = false;
+        for(auto someID : activeIds){
+            if(someID == someBlockInfo.id){
                 found = true;
             }
         }
-
-        if(!found){
-            levelsCleared += activeBlocks[i].level;
+        if(found){
+            newActives.emplace_back(someBlockInfo);
         } else{
-            found = false;
+            score +=  (1 + someBlockInfo.level) * (1 + someBlockInfo.level);
         }
     }
 
-    return (linesCleared + level) * (linesCleared + level) + 
-        (levelsCleared + 1) * (levelsCleared + 1);
+    if(linesCleared > 0){
+        score += (linesCleared + level) * (linesCleared + level);
+    }
+
+    
+    activeBlocks = newActives;
+
+    return score;
 }
 
 void Player::drop(){
-    BlockInfo bi{blockID, level};
+    BlockInfo bi{blockID, nextBlock.getLevel()};
     activeBlocks.emplace_back(bi);
-    blockID++;
 
-    int linesCleared = board->drop(nextBlock, level);
     board->erase(nextBlock);
+    int linesCleared = board->drop(nextBlock, blockID);
+    blockID++;
     score += this->getScore(linesCleared);
-    nextBlock = blockFactory->createBlock();
+
+    nextBlock = nextNextBlock;
+    nextNextBlock = blockFactory->createBlock();
+
     if(!blockIsValid()){
         throw "Game Over";
     }
+
     board->draw(nextBlock, blockID);
 
     if(level == 4){
@@ -142,10 +162,10 @@ void Player::drop(){
         } else{
             starCounter = 0;
         }
-    }
 
-    if(starCounter % 5 == 0){
+        if(starCounter % 5 == 0){
         board->dropStar();
+        }
     }
 }
 
@@ -155,4 +175,26 @@ int Player::getScore(){
 
 int Player::getLevel(){
     return level;
+}
+
+Block Player::getNextNextBlock(){
+    return nextNextBlock;
+}
+
+ostream &operator<<(std::ostream &out, const Player &p) {
+    out << "Level: " << p.level << endl;
+    out << "Score: " << p.score << endl;
+    out << "blockID: " << p.blockID << endl;
+    out << "starCounter: " << p.starCounter << endl;
+    out << "Active Blocks:";
+    for(int i = 0; i < p.activeBlocks.size(); i++){
+        out << p.activeBlocks[i].id << ", ";
+    }
+    out << endl;
+    out << "***********" << endl;
+    out << *(p.board) << endl;
+    //out << "***********" << endl;
+    //out << p.nextBlock << endl;
+
+    return out;
 }
