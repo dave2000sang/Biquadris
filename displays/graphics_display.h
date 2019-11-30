@@ -5,6 +5,7 @@
 #include "window.h"
 #include "subject.h"
 #include <iostream>
+#include "info.h"
 
 class Xwindow;
 
