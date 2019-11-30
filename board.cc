@@ -10,8 +10,8 @@ void Board::init(int width, int height) {
     theBoard = vector<vector<Cell>> (height);
     for (int i = 0; i < height; ++i) {
         for (int j = 0; j < width; ++j) {
-            newCell = Cell{i, j, 0, ' '};
-            theBoard[i].emplace_back();
+            Cell newCell = Cell{i, j, 0, ' '};
+            theBoard[i].emplace_back(newCell);
         }
     }
 }
