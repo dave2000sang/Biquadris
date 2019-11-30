@@ -28,7 +28,7 @@ class Player {
     //***************************public for testing
 
 
-    Player(string fileName, GameState * gs);
+    Player(string fileName, Observer<Info> * gs);
     bool blockIsValid();
     void rotate(string dir);
     void translate(int x, int y);
@@ -38,6 +38,7 @@ class Player {
     void setRandom();
     void replaceBlock(char c);
     void drop();
+    void attachObserver(Observer<Info>* gs);
 
     // Getter Methods
     int getScore();
