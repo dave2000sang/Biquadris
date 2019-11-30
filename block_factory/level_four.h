@@ -1,8 +1,8 @@
 #ifndef LEVEL_FOUR_H
 #define LEVEL_FOUR_H
 
-#include "block.h"
-#include <iostream>
+#include "block_factory.h"
+#include <fstream>
 using namespace std;
 
 class LevelFour : public BlockFactory {

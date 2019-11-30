@@ -1,7 +1,7 @@
 #ifndef LEVEL_ONE_H
 #define LEVEL_ONE_H
 
-#include "block.h"
+#include "block_factory.h"
 using namespace std;
 
 class LevelOne : public BlockFactory {

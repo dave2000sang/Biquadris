@@ -1,15 +1,8 @@
 #include "level_three.h"
-#include "blocks/i_block.h"
-#include "blocks/j_block.h"
-#include "blocks/l_block.h"
-#include "blocks/o_block.h"
-#include "blocks/s_block.h"
-#include "blocks/t_block.h"
-#include "blocks/z_block.h"
 #include <cstdlib>
 using namespace std;
 
-Block LevelThree::createBlock() override{
+Block LevelThree::createBlock() {
     if(random){
         int num = rand() % 9;      // generates number from 0 to 8 inclusive
 
@@ -32,7 +25,7 @@ Block LevelThree::createBlock() override{
         char c = in.get();
         if(in.fail()){
             // Restarts from beginning of file if the end is reached
-            this->in.open(this->file);
+            this->in.open(file);
             c = in.get();
         }
 
@@ -54,12 +47,12 @@ Block LevelThree::createBlock() override{
     }
 }
 
-void LevelThree::setRandom() override{
+void LevelThree::setRandom() {
     this->random = true;
 }
 
-void LevelThree::setFile(string fileName) override{
-    this->file = fileName
+void LevelThree::setFile(string fileName) {
+    this->file = fileName;
     this->random = false;
     this->in.open(fileName);
 }

@@ -1,14 +1,24 @@
 #ifndef BLOCK_FACTORY_H
 #define BLOCK_FACTORY_H
 
-#include "block.h"
+#include "../blocks/block.h"
+#include "../blocks/i_block.h"
+#include "../blocks/j_block.h"
+#include "../blocks/l_block.h"
+#include "../blocks/t_block.h"
+#include "../blocks/s_block.h"
+#include "../blocks/z_block.h"
+#include "../blocks/o_block.h"
+#include <string>
 
 class BlockFactory {
+  protected:
     std::string file;
   public:
     virtual Block createBlock() = 0;
-    virtual void setFile(string fileName);
+    virtual void setFile(std::string fileName);
     virtual void setRandom();
+    Block specificBlock(char c, int level);
 };
 
 #endif
