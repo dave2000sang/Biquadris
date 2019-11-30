@@ -4,8 +4,7 @@
 struct Cell{
     int row, col;
     int id;
-    char type;
-    
+    char type;      //type of block occupying this cell (I, J, *, ' ', ...)
 };
 
 #endif
