@@ -38,6 +38,10 @@ class Player {
     void setRandom();
     void replaceBlock(char c);
     void drop();
+
+    // Getter Methods
+    int getScore();
+    int getLevel();
 };
 
 #endif

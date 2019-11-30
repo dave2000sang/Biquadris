@@ -8,6 +8,7 @@
 Player::Player(string fileName): blockID{1}, score{0}, level{0}, starCounter{0}{
     levelZeroFile = fileName;
     board = make_unique<Board>();
+    board->init(11, 18);
     blockFactory = make_unique<LevelZero>(fileName);
     nextBlock = blockFactory->createBlock();
 }
@@ -128,4 +129,12 @@ void Player::drop(){
     if(starCounter % 5 == 0){
         board->dropStar();
     }
+}
+
+int Player::getScore(){
+    return score;
+}
+
+int Player::getLevel(){
+    return level;
 }
