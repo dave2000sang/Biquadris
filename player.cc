@@ -4,6 +4,7 @@
 #include "block_factory/level_two.h"
 #include "block_factory/level_three.h"
 #include "block_factory/level_four.h"
+#include <exception>
 
 Player::Player(string fileName): blockID{1}, score{0}, level{0}, starCounter{0}{
     levelZeroFile = fileName;
@@ -11,9 +12,11 @@ Player::Player(string fileName): blockID{1}, score{0}, level{0}, starCounter{0}{
     board->init(11, 18);
     blockFactory = make_unique<LevelZero>(fileName);
     nextBlock = blockFactory->createBlock();
+    board->draw(nextBlock, blockID);
 }
 
 bool Player::blockIsValid(){
+    board->erase(nextBlock);
     vector<vector<bool>> boardBools = board->boardSpace();
     vector<vector<bool>> blockBools = nextBlock.getCells();
     int x = nextBlock.getX();
@@ -24,10 +27,12 @@ bool Player::blockIsValid(){
     for(int row = height - 1; row >= 0; --row){
         for(int col = 0; col < width; ++col){
             if(blockBools[row][col] && boardBools[y - height + row + 1][x + col]){
+                board->draw(nextBlock, blockID);
                 return false;
             }
         }
     }
+    board->draw(nextBlock, blockID);
     return true;
 }
 
@@ -35,6 +40,9 @@ void Player::rotate(string dir){
     Block temp = nextBlock;
     if(!(nextBlock.rotate(dir) && blockIsValid())){
         nextBlock = temp;
+    } else{
+        board->erase(temp);
+        board->draw(nextBlock, this->blockID);
     }
 }
 
@@ -42,6 +50,9 @@ void Player::translate(int x, int y){
     Block temp = nextBlock;
     if(!(nextBlock.translate(x, y) && blockIsValid())){
         nextBlock = temp;
+    } else{
+        board->erase(temp);
+        board->draw(nextBlock, blockID);
     }
 }
 
@@ -83,7 +94,9 @@ void Player::setRandom(){
 }
 
 void Player::replaceBlock(char c){
+    board->erase(nextBlock);
     nextBlock = blockFactory->specificBlock(c, level);
+    board->draw(nextBlock, blockID);
 }
 
 int Player::getScore(int linesCleared){
@@ -115,8 +128,13 @@ void Player::drop(){
     blockID++;
 
     int linesCleared = board->drop(nextBlock, level);
+    board->erase(nextBlock);
     score += this->getScore(linesCleared);
     nextBlock = blockFactory->createBlock();
+    if(!blockIsValid()){
+        throw "Game Over";
+    }
+    board->draw(nextBlock, blockID);
 
     if(level == 4){
         if(linesCleared == 0){
