@@ -6,7 +6,7 @@
 struct Cell : public Subject {
     int row, col;
     int id;
-    char type;
+    char type;      //type of block occupying this cell (I, J, *, ' ', ...)
     int player; // 1 or 2
 
     Info getInfo();

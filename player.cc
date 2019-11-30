@@ -114,7 +114,7 @@ void Player::drop(){
     activeBlocks.emplace_back(bi);
     blockID++;
 
-    int linesCleared = board->drop(nextBlock, nextBlock.getType(), level);
+    int linesCleared = board->drop(nextBlock, level);
     score += this->getScore(linesCleared);
     nextBlock = blockFactory->createBlock();
 
