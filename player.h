@@ -28,7 +28,7 @@ class Player {
     //***************************public for testing
 
 
-    Player(string fileName, Observer<Info> * gs);
+    Player(string fileName);
     bool blockIsValid();
     void rotate(string dir);
     void translate(int x, int y);
