@@ -41,7 +41,7 @@ bool Block::rotate(string dir) {
     // check if rotation is valid
     int x2 = x + h - 1;
     int y2 = y - w + 1;
-    if (y2 < 0 || x2 > 11) {
+    if (y2 < 0 || x2 >= 11) {
         return false;
     }
 

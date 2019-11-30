@@ -107,7 +107,6 @@ void Game::play() {
                 cout << "Invalid command" << endl;
                 continue;
             }
-            game->updateTurn();     // next player's turn
 
             // TODO : check game over condition
         }

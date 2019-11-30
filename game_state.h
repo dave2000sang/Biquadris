@@ -20,7 +20,6 @@ class GameState {
     void noRandom(std::string file);
     void setRandom();
     void replaceBlock(char block);
-    void updateTurn();
     int getScore(int player);
 };
 
