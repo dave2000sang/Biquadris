@@ -13,17 +13,18 @@
 class Board {
     std::vector<std::vector<Cell>> theBoard;
     int width, height;
-    std::vector<BlockInfo> activeBlocks;
 
     public:
 
-    int drop(Block &block, char type, int ID);
+    int drop(Block &block, int ID);
     int clearLines(); // returns # of lines cleared
     std::vector<int> getIDs(); // unique IDs without 0
     void init(int width = 11, int height = 18);
     void reverse();
     std::vector<std::vector<bool>> boardSpace();
     void dropStar();
+    void erase(const Block b);
+    void draw(const Block b, int ID);
 
     // helpers
     bool isRowFull(std::vector<Cell> &row);
