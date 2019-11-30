@@ -7,7 +7,7 @@ using namespace std;
 
 class LevelFour : public BlockFactory {
   ifstream in;
-  bool random;
+  bool random = true;
   public:
     Block createBlock() override;
     void setRandom() override;

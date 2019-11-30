@@ -25,6 +25,7 @@ class Block {
     int getW();
     int getH();
     char getType();
+    int getLevel();
     std::vector<std::vector<bool>> getCells();
 
     // should we use friend class ?

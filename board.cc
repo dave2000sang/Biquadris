@@ -107,6 +107,7 @@ vector<int> Board::getIDs() {
 
     // convert to a vector
     vector<int> idVec(idSet.begin(), idSet.end());
+
     return idVec;
 }
 

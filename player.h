@@ -44,6 +44,9 @@ class Player {
     int getScore();
     int getLevel();
     Block getNextNextBlock();
+
+    // For Testing
+    friend std::ostream &operator<<(std::ostream &out, const Player &p);
 };
 
 #endif
