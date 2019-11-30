@@ -20,7 +20,7 @@ class Board {
     int drop(Block &block, char type, int ID);
     int clearLines(); // returns # of lines cleared
     std::vector<int> getIDs(); // unique IDs without 0
-    void init(int width, int height);
+    void init(int width = 11, int height = 18);
     void reverse();
 
     // helpers

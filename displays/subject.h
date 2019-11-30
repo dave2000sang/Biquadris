@@ -3,19 +3,21 @@
 #include <vector>
 #include "observer.h"
 
-class Subject {
-  int row, col; // cell's cooridinates
-  std::vector<Observer*> observers;
+template <typename Infotype> class Subject {
+  std::vector<Observer<Infotype>*> observers;
  public:
-  void attach(Observer *o);  
+  void attach(Observer<Infotype> *o);  
   void notifyObservers();
+  virtual InfoType getInfo() const = 0;
 };
 
-void Subject::attach(Observer *o) {
+template <typename Infotype>
+void Subject<Infotype>::attach(Observer<Infotype> *o) {
   observers.emplace_back(o);
 }
 
-void Subject::notifyObservers() {
+template <typename Infotype>
+void Subject<Infotype>::notifyObservers() {
   for (auto &ob : observers) ob->notify(*this);
 }
 

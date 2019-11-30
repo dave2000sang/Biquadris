@@ -26,14 +26,16 @@ TextDisplay::TextDisplay() {
     score_2 = 0;
 }
 
-void TextDisplay::notify(Subject &whoNotified) {
-    // TODO: make cell a child of subject and implement notify
-    // TODO: add a info class for subject that contains the type and position of cell
-    
+void TextDisplay::notify(Subject<Info> &whoNotified) {
+    Info info = whoNotified.getInfo();
+    if (info.player == 1) {
+        b1[info.row][info.col] = info.type;
+    } else if (info.player == 2) {
+        b2[info.row][info.col] = info.type;
+    }
 }
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
-    // TODO
     string space = "       ";
     string border = "-----------";
 

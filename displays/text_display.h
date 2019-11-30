@@ -6,8 +6,9 @@
 #include <vector>
 #include "observer.h"
 #include "subject.h"
+#include "info.h"
 
-class TextDisplay: public Observer {
+class TextDisplay: public Observer<Info> {
 
     const int width = 11;
     const int height = 18;
