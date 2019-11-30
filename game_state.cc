@@ -63,3 +63,11 @@ void GameState::notify(Subject<Info> &whoFrom) {
     info.level = turn % 2 == 0 ? p1->getLevel() : p2->getLevel();
     td->update(info);
 }
+
+int GameState::getScore(int player) {
+    if (player == 1) {
+        return p1->getScore();
+    } else {
+        return p2->getScore();
+    }
+}
