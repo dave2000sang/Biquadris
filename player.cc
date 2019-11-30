@@ -6,10 +6,10 @@
 #include "block_factory/level_four.h"
 #include <exception>
 
-Player::Player(string fileName): blockID{1}, score{0}, level{0}, starCounter{0}{
+Player::Player(string fileName, GameState * gs): blockID{1}, score{0}, level{0}, starCounter{0}{
     levelZeroFile = fileName;
     board = make_unique<Board>();
-    board->init(11, 18);
+    board->init(gs);
     blockFactory = make_unique<LevelZero>(fileName);
     nextBlock = blockFactory->createBlock();
     board->draw(nextBlock, blockID);

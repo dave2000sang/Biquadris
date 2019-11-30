@@ -8,7 +8,7 @@
 #include "blocks/block.h"
 #include "block_info.h"
 
-
+class GameState;
 // TODO: attach textdisplay and graphics pointers
 class Board {
     std::vector<std::vector<Cell>> theBoard;
@@ -19,7 +19,7 @@ class Board {
     int drop(Block &block, int ID);
     int clearLines(); // returns # of lines cleared
     std::vector<int> getIDs(); // unique IDs without 0
-    void init(int width = 11, int height = 18);
+    void init(GameState * gs, int width = 11, int height = 18);
     void reverse();
     std::vector<std::vector<bool>> boardSpace();
     void dropStar();
