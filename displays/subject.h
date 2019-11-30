@@ -3,21 +3,22 @@
 #include <vector>
 #include "observer.h"
 
-template <typename Infotype> class Subject {
-  std::vector<Observer<Infotype>*> observers;
+template <typename InfoType>
+class Subject {
+  std::vector<Observer<InfoType>*> observers;
  public:
-  void attach(Observer<Infotype> *o);  
+  void attach(Observer<InfoType> *o);  
   void notifyObservers();
   virtual InfoType getInfo() const = 0;
 };
 
-template <typename Infotype>
-void Subject<Infotype>::attach(Observer<Infotype> *o) {
+template <typename InfoType>
+void Subject<InfoType>::attach(Observer<InfoType> *o) {
   observers.emplace_back(o);
 }
 
-template <typename Infotype>
-void Subject<Infotype>::notifyObservers() {
+template <typename InfoType>
+void Subject<InfoType>::notifyObservers() {
   for (auto &ob : observers) ob->notify(*this);
 }
 
