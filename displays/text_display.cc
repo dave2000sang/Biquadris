@@ -1,70 +1,50 @@
 #include "text_display.h"
 using namespace std;
 
-TextDisplay::TextDisplay() {
-    
-    // initializing player 1's board
-    b1 = vector<vector<char>> (height);
-    for (auto &row : b1) {
-        for (int i = 0; i < width; ++i) {
-            row.emplace_back(' ');
-        }
-    }
+TextDisplay::TextDisplay() : pd1{make_unique<PlayerDisplay>())}, pd2{make_unique<PlayerDisplay>()} {}
 
-    // initializing player 2's board
-    b2 = vector<vector<char>> (height);
-    for (auto &row : b2) {
-        for (int i = 0; i < width; ++i) {
-            row.emplace_back(' ');
-        }
-    }
-
-    // level and score for both players start at 0
-    level_1 = 0;
-    level_2 = 0;
-    score_1 = 0;
-    score_2 = 0;
-}
-
-void TextDisplay::notify(Subject<Info> &whoNotified) {
-    Info info = whoNotified.getInfo();
-    if (info.player == 1) {
-        b1[info.row][info.col] = info.type;
-    } else if (info.player == 2) {
-        b2[info.row][info.col] = info.type;
-    }
-}
-
-ostream &operator<<(ostream &out, const TextDisplay &td) {
+void TextDisplay::print() {
     string space = "       ";
     string border = "-----------";
 
     // level and score
-    out << "Level: " << setw(4) << td.level_1 << space << "Level: " << setw(4) << td.level_2 << endl;
-    out << "Score: " << setw(4) << td.score_1 << space << "Score: " << setw(4) << td.score_2 << endl;
-    out << border << space << border << endl;
+    cout << "Level: " << setw(4) << level_1 << space << "Level: " << setw(4) << level_2 << endl;
+    cout << "Score: " << setw(4) << score_1 << space << "Score: " << setw(4) << score_2 << endl;
+    cout << border << space << border << endl;
 
     // boards
-    for (int i = 0; i < td.height; ++i) {
+    for (int i = 0; i < height; ++i) {
 
         // ith row of b1
-        for (int j = 0; j < td.width; ++j) {
-            out << td.b1[i][j];
+        for (int j = 0; j < width; ++j) {
+            cout << theDisplay1[i][j];
         }
 
         // space
-        out << space;
+        cout << space;
 
         // ith row of b2
-        for (int j = 0; j < td.width; ++j) {
-            out << td.b2[i][j];
+        for (int j = 0; j < width; ++j) {
+            cout << theDisplay2[i][j];
         }
-        out << endl;
+        cout << endl;
     }
 
-    // next block
-    out << "Next:      " << space << "Next:      " << endl;
     // TODO: next block
+    cout << "Next:      " << space << "Next:      " << endl;
+}
 
-    return out;
+void TextDisplay::update(Info info) {
+    if (info.player == 1) {
+        theDisplay1[info.row][info.col] = info.type;
+        level_1 = info.level;
+        score_1 = info.score;
+    } else if (info.player == 2) {
+        theDisplay2[info.row][info.col] = info.type;
+        level_2 = info.level;
+        score_2 = info.score;
+    } else {
+        cout << "Error: TextDisplay::notify player is not 1 or 2" << endl;
+    }
+    this->print();
 }

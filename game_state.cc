@@ -1,7 +1,8 @@
 #include "game_state.h"
 using namespace std;
 
-GameState::GameState() : p1{make_unique<Player>()}, p2{make_unique<Player>()}, turn{0} {}
+GameState::GameState() : p1{make_unique<Player>(this)}, p2{make_unique<Player>(this)}, turn{0},
+td{make_unique<TextDisplay>()} {}
 
 void GameState::rotate(int reps, string dir) {
     turn % 2 == 0 ? p1.rotate(reps, dir) : p2.rotate(reps, dir);
@@ -53,4 +54,12 @@ void GameState::restart() {
 
 void GameState::updateTurn() {
     turn += 1;
+}
+
+void GameState::notify(Subject<Info> &whoFrom) {
+    Info info = whoFrom.getInfo();
+    info.player = turn % 2 == 0 ? 1 : 2;
+    info.score = turn % 2 == 0 ? p1->getScore() : p2->getScore();
+    info.level = turn % 2 == 0 ? p1->getLevel() : p2->getLevel();
+    td->update(info);
 }

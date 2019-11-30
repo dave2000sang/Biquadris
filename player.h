@@ -10,9 +10,8 @@
 #include <string>
 using namespace std;
 
+class GameState;
 class Player {
-    
-    
     // Helper functions
     int getScore(int linesCleared);
     void updateFactory();
@@ -28,7 +27,7 @@ class Player {
     //***************************public for testing
 
 
-    Player(string fileName);
+    Player(string fileName, GameState * gs);
     bool blockIsValid();
     void rotate(string dir);
     void translate(int x, int y);
