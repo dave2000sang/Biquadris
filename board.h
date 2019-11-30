@@ -19,12 +19,13 @@ class Board {
     int drop(Block &block, int ID);
     int clearLines(); // returns # of lines cleared
     std::vector<int> getIDs(); // unique IDs without 0
-    void init(GameState * gs, int width = 11, int height = 18);
+    void init(Observer<Info> * gs, int width = 11, int height = 18);
     void reverse();
     std::vector<std::vector<bool>> boardSpace();
     void dropStar();
     void erase(const Block b);
     void draw(const Block b, int ID);
+    void attachObserver(Observer<Info>* gs);
 
     // helpers
     bool isRowFull(std::vector<Cell> &row);

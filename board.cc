@@ -1,7 +1,7 @@
 #include "board.h"
 using namespace std;
 
-void Board::init(GameState * gs, int width, int height) {
+void Board::init(Observer<Info> * gs, int width, int height) {
     theBoard.clear();
     this->width = width;
     this->height = height;
@@ -11,7 +11,7 @@ void Board::init(GameState * gs, int width, int height) {
         for (int j = 0; j < width; ++j) {
             Cell newCell = Cell{i, j, 0, ' '};
             theBoard[i].emplace_back(newCell);
-            theBoard[i][j].attach(gs);
+            // theBoard[i][j].attach(gs);
         }
     }
 }
@@ -51,9 +51,11 @@ int Board::drop(Block &block, int ID) { // TODO: get type from block
             if (block.cells[i][j]) {
                 theBoard[i + y][j + x].type = type;
                 theBoard[i + y][j + x].id = ID;
+                theBoard[i + y][j + x].notifyObservers();
             }
         }
     }
+
 
     // clear full rows and return # of lines cleared
     return this->clearLines();
@@ -78,6 +80,7 @@ int Board::clearLines() {
                 for (int k = 0; k < width; ++k) {
                     theBoard[j+1][k].id = tempBoard[j][k].id;
                     theBoard[j+1][k].type = tempBoard[j][k].type;
+                    theBoard[j + 1][k].notifyObservers();
                 }
             }
 
@@ -85,6 +88,7 @@ int Board::clearLines() {
             for (auto &cell : theBoard[0]) {
                 cell.type = ' ';
                 cell.id = 0;
+                cell.notifyObservers();
             }
 
             // increment rows cleared
@@ -136,6 +140,7 @@ void Board::dropStar() {
         if (curCell.type == ' ') {
             curCell.type = '*';
             curCell.type = 0;
+            curCell.notifyObservers();
             flag = true;
         }
     }
@@ -150,6 +155,7 @@ void Board::erase(const Block b) {
             if (b.cells[i][j]) {
                 theBoard[b.y+i][b.x+j].type = ' ';
                 theBoard[b.y+i][b.x+j].id = 0;
+                theBoard[b.y+i][b.x+j].notifyObservers();
             }
         }
     }
@@ -158,9 +164,10 @@ void Board::erase(const Block b) {
 void Board::draw(const Block b, int ID) {
     for (int i = 0; i < b.h; i++) {
         for (int j = 0; j < b.w; j++) {
-            if (b.cells[i][j]) {
+            if (b.cells[i][j]) {  //save
                 theBoard[b.y+i][b.x+j].type = b.type;
                 theBoard[b.y+i][b.x+j].id = ID;
+                theBoard[b.y+i][b.x+j].notifyObservers();
             }
         }
     }
@@ -178,4 +185,13 @@ ostream &operator<<(std::ostream &out, const Board &b) {
         out << endl;
     }
     return out;
+}
+
+void Board::attachObserver(Observer<Info>* gs){
+    for(auto &row : theBoard){
+        for(auto &aCell : row){
+            aCell.attach(gs);
+            aCell.notifyObservers();
+        }
+    }
 }

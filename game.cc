@@ -5,7 +5,9 @@
 #include <algorithm>
 using namespace std;
 
-Game::Game() : game{make_unique<GameState>()} {
+Game::Game() : game{make_shared<GameState>()} {
+    game->attachToSubjects();
+    game->td->print();
     this->play();
 }
 
@@ -108,6 +110,8 @@ void Game::play() {
                 continue;
             }
 
+            game->td->print();
+
             // TODO : check game over condition
         }
     } catch(int whoWon) {
@@ -119,6 +123,7 @@ void Game::restart(int whoWon) {
     int highScore = max(highScore, max(game->getScore(1), game->getScore(2)));
     cout << "Player " << whoWon << " Wins!" << endl;
     game.reset(new GameState);
+    game->td->print();
     this->play();
 }
 

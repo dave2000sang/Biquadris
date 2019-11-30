@@ -1,8 +1,8 @@
 #include "game_state.h"
 using namespace std;
 
-GameState::GameState() : p1{make_unique<Player>(this)}, p2{make_unique<Player>(this)}, turn{0},
-td{make_unique<TextDisplay>()} {}
+GameState::GameState() : p1{make_shared<Player>("sequence1.txt", this)}, p2{make_shared<Player>("sequence2.txt", this)}, turn{0},
+td{make_shared<TextDisplay>()} {}
 
 void GameState::rotate(int reps, string dir) {
     for (int i = 0; i < reps; i++) {
@@ -57,6 +57,7 @@ void GameState::replaceBlock(char block) {
 }
 
 void GameState::notify(Subject<Info> &whoFrom) {
+    cout << "GS IS NOTIFIED" << endl;
     Info info = whoFrom.getInfo();
     info.player = turn % 2 == 0 ? 1 : 2;
     info.score = turn % 2 == 0 ? p1->getScore() : p2->getScore();
@@ -70,4 +71,9 @@ int GameState::getScore(int player) {
     } else {
         return p2->getScore();
     }
+}
+
+void GameState::attachToSubjects(){
+    p1->attachObserver(this);
+    p2->attachObserver(this);
 }

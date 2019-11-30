@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "player_display.h"
 #include "info.h"
 
 class TextDisplay {

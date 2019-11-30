@@ -5,7 +5,7 @@
 #include "command.h"
 
 class Game {
-    unique_ptr<GameState> game;
+    shared_ptr<GameState> game;
     Command cmdInterp;
     int highScore;
   public:

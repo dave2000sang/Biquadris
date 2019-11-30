@@ -10,10 +10,13 @@
 #include <memory>
 
 class GameState : public Observer<Info> {
-    std::unique_ptr<Player> p1, p2;
+    std::shared_ptr<Player> p1, p2;
     int turn;
-    std::unique_ptr<TextDisplay> td;
+    
   public:
+
+    std::shared_ptr<TextDisplay> td;
+    
     GameState();
     void notify(Subject<Info> &whoFrom) override;
     void rotate(int reps, std::string dir);
@@ -25,6 +28,7 @@ class GameState : public Observer<Info> {
     void setRandom();
     void replaceBlock(char block);
     int getScore(int player);
+    void attachToSubjects();
 };
 
 #endif
