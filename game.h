@@ -5,12 +5,13 @@
 #include "command.h"
 
 class Game {
-    GameState game;
+    unique_ptr<GameState> game;
     Command cmdInterp;
     int highScore;
   public:
     Game();
     void play();
+    void restart(int whoWon);
 };
 
 #endif

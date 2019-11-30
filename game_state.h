@@ -14,14 +14,14 @@ class GameState {
     GameState();
     void rotate(int reps, std::string dir);
     void translate(int reps, int x, int y);
-    void drop();
+    void drop(int multiplier);
     void levelUp(int multiplier);
     void levelDown(int multiplier);
     void noRandom(std::string file);
     void setRandom();
     void replaceBlock(char block);
-    void restart();
     void updateTurn();
+    int getScore(int player);
 };
 
 #endif
