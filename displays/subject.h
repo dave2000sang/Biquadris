@@ -4,6 +4,7 @@
 #include "observer.h"
 
 template <typename InfoType> class Subject {
+
   std::vector<Observer<InfoType>*> observers;
  public:
   void attach(Observer<InfoType> *o);  
