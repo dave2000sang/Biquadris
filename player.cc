@@ -12,6 +12,7 @@ Player::Player(string fileName): blockID{1}, score{0}, level{0}, starCounter{0}{
     board->init(11, 18);
     blockFactory = make_unique<LevelZero>(fileName);
     nextBlock = blockFactory->createBlock();
+    nextNextBlock = blockFactory->createBlock();
     board->draw(nextBlock, blockID);
 }
 
@@ -130,7 +131,8 @@ void Player::drop(){
     board->erase(nextBlock);
     int linesCleared = board->drop(nextBlock, nextBlock.getType(), level);
     score += this->getScore(linesCleared);
-    nextBlock = blockFactory->createBlock();
+    nextBlock = nextNextBlock;
+    nextNextBlock = blockFactory->createBlock();
     if(!blockIsValid()){
         throw "Game Over";
     }
@@ -155,4 +157,8 @@ int Player::getScore(){
 
 int Player::getLevel(){
     return level;
+}
+
+Block Player::getNextNextBlock(){
+    return nextNextBlock;
 }
