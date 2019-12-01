@@ -8,11 +8,30 @@ void GameState::rotate(int reps, string dir) {
     for (int i = 0; i < reps; i++) {
         turn % 2 == 0 ? p1->rotate(dir) : p2->rotate(dir);
     }
+
+    if(turn % 2 == 0){
+        if(!p1->lowerIfHeavy()){
+            p1->drop();
+        }
+    } else{
+        if(!p2->lowerIfHeavy()){
+            p2->drop();
+        }
+    }
 }
 
 void GameState::translate(int reps, int x, int y) {
     for (int i = 0; i < reps; i++) {
         turn % 2 == 0 ? p1->translate(x, y) : p2->translate(x, y);
+    }
+    if(turn % 2 == 0){
+        if(!p1->lowerIfHeavy()){
+            p1->drop();
+        }
+    } else{
+        if(!p2->lowerIfHeavy()){
+            p2->drop();
+        }
     }
 }
 
