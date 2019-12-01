@@ -57,7 +57,6 @@ void GameState::replaceBlock(char block) {
 }
 
 void GameState::notify(Subject<Info> &whoFrom) {
-    cout << "GS IS NOTIFIED" << endl;
     Info info = whoFrom.getInfo();
     info.player = turn % 2 == 0 ? 1 : 2;
     info.score = turn % 2 == 0 ? p1->getScore() : p2->getScore();
@@ -75,5 +74,7 @@ int GameState::getScore(int player) {
 
 void GameState::attachToSubjects(){
     p1->attachObserver(this);
+    turn++;
     p2->attachObserver(this);
+    turn--;
 }

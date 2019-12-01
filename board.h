@@ -21,7 +21,7 @@ class Board {
     std::vector<int> getIDs(); // unique IDs without 0
     void init(Observer<Info> * gs, int width = 11, int height = 18);
     void reverse();
-    std::vector<std::vector<bool>> boardSpace();
+    std::vector<std::vector<Cell>> getBoard();
     void dropStar();
     void erase(const Block b);
     void draw(const Block b, int ID);

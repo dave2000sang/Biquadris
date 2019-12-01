@@ -116,21 +116,8 @@ vector<int> Board::getIDs() {
     return idVec;
 }
 
-vector<vector<bool>> Board::boardSpace(){
-    vector<vector<bool>> boolBoard;
-
-    for(auto row : theBoard){
-        vector<bool> boolRow;
-        for(auto cell : row){
-            if(cell.type == ' '){
-                boolRow.emplace_back(false);
-            }else{
-                boolRow.emplace_back(true);
-            }
-        }
-        boolBoard.emplace_back(boolRow);
-    }
-    return boolBoard;
+vector<vector<Cell>> Board::getBoard(){
+    return theBoard;
 }
 
 void Board::dropStar() {
