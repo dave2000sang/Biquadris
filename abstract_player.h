@@ -21,7 +21,6 @@ protected:
     Block nextNextBlock;
     vector<BlockInfo> activeBlocks;
     int score, level, blockID, starCounter;
-
      // Helper functions
     int calculateScore(int linesCleared);
     void updateFactory();

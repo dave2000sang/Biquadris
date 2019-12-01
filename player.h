@@ -5,13 +5,6 @@
 using namespace std;
 
 class Player : public AbstractPlayer{
-    shared_ptr<Board> board;
-    shared_ptr<BlockFactory> blockFactory;
-    string levelZeroFile;
-    Block nextBlock;
-    Block nextNextBlock;
-    vector<BlockInfo> activeBlocks;
-    int score, level, blockID, starCounter;
 
   public:
     Player(string fileName);
