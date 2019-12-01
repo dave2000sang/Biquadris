@@ -8,17 +8,19 @@
 #include "displays/info.h"
 #include "displays/observer.h"
 #include "displays/text_display.h"
+#include "displays/graphics_display.h"
 #include <memory>
 
 class GameState : public Observer<Info> {
     std::shared_ptr<AbstractPlayer> p1, p2;
     int turn;
-    
+    int startlevel;
   public:
-
-    std::shared_ptr<TextDisplay> td;
+    bool graphicsActive;
+    std::unique_ptr<TextDisplay> td;
+    std::unique_ptr<GraphicsDisplay> gd;
     
-    GameState();
+    GameState(int level, std::string file1, std::string file2, bool graphicsActive);
     void notify(Subject<Info> &whoFrom) override;
     void rotate(int reps, std::string dir);
     void translate(int reps, int x, int y);

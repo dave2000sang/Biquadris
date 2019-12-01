@@ -1,7 +1,5 @@
-main.cc
 a.out
-sequence1.txt
-sequence2.txt
+sequence*.txt
 *.d
 *.o
 biquadris

@@ -163,7 +163,8 @@ int Player::drop(){
     nextNextBlock = blockFactory->createBlock();
 
     if(!blockIsValid()){
-        throw "Game Over";
+        cout << "before throw game over " << endl;
+        throw string("Game Over");
     }
 
     board->draw(nextBlock, blockID);

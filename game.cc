@@ -5,7 +5,10 @@
 #include <algorithm>
 using namespace std;
 
-Game::Game() : game{make_shared<GameState>()} {
+Game::Game(int startlevel, string file1, string file2, bool graphicsActive) : file1{file1}, file2{file2}, startlevel{startlevel}, game{make_shared<GameState>(startlevel, file1, file2, graphicsActive)}, highScore{0}, graphicsActive{graphicsActive} {
+    game->attachToSubjects();
+    game->td->print();
+    game->gd->printGraphics();
     this->play();
 }
 
@@ -23,7 +26,8 @@ void Game::play() {
                 }
             } else {
                 if (!(cin >> input)) {
-                    if(cin.eof()){
+                    if (cin.eof()) {
+                        // Exit program
                         return;
                     }
                     cout << "Invalid command" << endl;
@@ -102,6 +106,7 @@ void Game::play() {
                     game->replaceBlock('T');
                     break;
                 case CommandType::restart:
+                    this->restart();
                     break;
                 default:
                     invalidInput = true;
@@ -116,15 +121,18 @@ void Game::play() {
             // TODO : check game over condition
         }
     } catch(int whoWon) {
-        this->restart(whoWon);
+        highScore = max(highScore, max(game->getScore(1), game->getScore(2)));
+        cout << "Player " << whoWon << " Wins!" << endl;
+        cout << "High Score = " << highScore << endl;
+        this->restart();
     }
 }
 
-void Game::restart(int whoWon) {
-    int highScore = max(highScore, max(game->getScore(1), game->getScore(2)));
-    cout << "Player " << whoWon << " Wins!" << endl;
-    game.reset(new GameState);
+void Game::restart() {
+    game.reset(new GameState{startlevel, file1, file2, graphicsActive});
+    game->attachToSubjects();
     game->td->print();
+    game->gd->printGraphics();
     this->play();
 }
 

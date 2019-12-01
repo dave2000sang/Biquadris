@@ -5,11 +5,9 @@
 #include "force_effect.h"
 using namespace std;
 
-GameState::GameState() : p1{make_shared<Player>("sequence1.txt")}, p2{make_shared<Player>("sequence2.txt")}, turn{0},
-td{make_shared<TextDisplay>()} {
-    this->attachToSubjects();
-    td->print();
-}
+
+GameState::GameState(int startlevel, string file1, string file2, bool graphicsActive) : startlevel{startlevel},
+    p1{make_shared<Player>(file1, startlevel)}, p2{make_shared<Player>(file2, startlevel)}, turn{0}, td{make_unique<TextDisplay>()}, gd{make_unique<GraphicsDisplay>(graphicsActive)}, graphicsActive{graphicsActive} {}
 
 void GameState::rotate(int reps, string dir) {
     for (int i = 0; i < reps; i++) {
@@ -100,6 +98,7 @@ void GameState::notify(Subject<Info> &whoFrom) {
     info.score = turn % 2 == 0 ? p1->getScore() : p2->getScore();
     info.level = turn % 2 == 0 ? p1->getLevel() : p2->getLevel();
     td->update(info);
+    gd->update(info);
 }
 
 int GameState::getScore(int player) {

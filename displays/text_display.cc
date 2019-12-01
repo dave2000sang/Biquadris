@@ -42,9 +42,11 @@ void TextDisplay::print() {
         cout << endl;
     }
 
-    // TODO: next block
+    // TODO: border, next block
     cout << "Next:      " << space << "Next:      " << endl;
 }
+
+
 
 void TextDisplay::update(Info info) {
     if (info.player == 1) {

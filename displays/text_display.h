@@ -19,6 +19,6 @@ class TextDisplay {
     public:
     TextDisplay();
     void update(Info info);
-    void print();
+    void print(); // textdisplay
 };
 #endif
