@@ -12,12 +12,11 @@
 class GameState : public Observer<Info> {
     std::shared_ptr<Player> p1, p2;
     int turn;
-    
+    int startlevel;
   public:
-
     std::shared_ptr<TextDisplay> td;
     
-    GameState();
+    GameState(int level, std::string file1, std::string file2);
     void notify(Subject<Info> &whoFrom) override;
     void rotate(int reps, std::string dir);
     void translate(int reps, int x, int y);

@@ -7,7 +7,7 @@
 #include <exception>
 #include <iostream>
 
-Player::Player(string fileName): blockID{1}, score{0}, level{0}, starCounter{0}{
+Player::Player(string fileName, int level): blockID{1}, score{0}, level{level}, starCounter{0}{
     levelZeroFile = fileName;
     board = make_unique<Board>();
     board->init();
@@ -148,7 +148,8 @@ void Player::drop(){
     nextNextBlock = blockFactory->createBlock();
 
     if(!blockIsValid()){
-        throw "Game Over";
+        cout << "before throw game over " << endl;
+        throw string("Game Over");
     }
 
     board->draw(nextBlock, blockID);

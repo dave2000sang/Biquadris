@@ -5,13 +5,15 @@
 #include "command.h"
 
 class Game {
+    int startlevel;
+    std::string file1, file2;
     shared_ptr<GameState> game;
     Command cmdInterp;
     int highScore;
   public:
-    Game();
+    Game(int startlevel, std::string file1, std::string file2);
     void play();
-    void restart(int whoWon);
+    void restart();
 };
 
 #endif
