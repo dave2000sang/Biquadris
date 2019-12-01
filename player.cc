@@ -7,10 +7,9 @@
 #include <exception>
 #include <iostream>
 
-Player::Player(string fileName){
+Player::Player(string fileName, int level): level{level}{
     this->blockID = 1;
     this->score = 0;
-    this->level = 0;
     this->starCounter = 0;
     levelZeroFile = fileName;
     board = make_shared<Board>();

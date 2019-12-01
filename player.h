@@ -14,7 +14,7 @@ class Player : public AbstractPlayer{
     int score, level, blockID, starCounter;
 
   public:
-    Player(string fileName);
+    Player(string fileName, int level);
     void attachObserver(Observer<Info>* gs) override;
 
     bool blockIsValid() override;
