@@ -121,13 +121,13 @@ vector<vector<Cell>> Board::getBoard(){
 
 void Board::dropStar() {
     bool flag = false;
-    for (int i = height - 1; i >= 0; i++) {
-        Cell &curCell = theBoard[i][5];
-        if (curCell.type == ' ') {
-            curCell.type = '*';
-            curCell.type = 0;
-            curCell.notifyObservers();
+    for (int i = height - 1; i >= 0; i--) {
+        if (theBoard[i][5].type == ' ') {
+            theBoard[i][5].type = '*';
+            theBoard[i][5].id = 0;
+            theBoard[i][5].notifyObservers();
             flag = true;
+            break;
         }
     }
     if (!flag) {
@@ -180,4 +180,8 @@ void Board::attachObserver(Observer<Info>* gs){
             aCell.notifyObservers();
         }
     }
+}
+
+void Board::updateLevel(){
+    theBoard[0][0].notifyObservers();
 }
