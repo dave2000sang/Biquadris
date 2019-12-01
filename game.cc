@@ -8,6 +8,7 @@ using namespace std;
 Game::Game() : game{make_shared<GameState>()} {
     game->attachToSubjects();
     game->td->print();
+    game->td->printGraphics();
     this->play();
 }
 
@@ -111,6 +112,7 @@ void Game::play() {
             }
 
             game->td->print();
+            // game->td->printGraphics();
 
             // TODO : check game over condition
         }
@@ -124,6 +126,7 @@ void Game::restart(int whoWon) {
     cout << "Player " << whoWon << " Wins!" << endl;
     game.reset(new GameState);
     game->td->print();
+    game->td->printGraphics();
     this->play();
 }
 
