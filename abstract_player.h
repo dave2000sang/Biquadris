@@ -14,34 +14,27 @@ class GameState;
 
 class AbstractPlayer{
 protected:
-    shared_ptr<Board> board;
-    shared_ptr<BlockFactory> blockFactory;
-    string levelZeroFile;
-    Block nextBlock;
-    Block nextNextBlock;
-    vector<BlockInfo> activeBlocks;
-    int score, level, blockID, starCounter;
+    
      // Helper functions
-    int calculateScore(int linesCleared);
-    void updateFactory();
-
 public:
-    bool blockIsValid();
-    void rotate(string dir);
-    bool translate(int x, int y);
-    void levelUp();
-    void levelDown();
-    void noRandom(string file);
-    void setRandom();
-    void replaceBlock(char c);
-    virtual void drop();
-    virtual bool lowerIfHeavy();
+    virtual bool blockIsValid() = 0;
+    virtual void rotate(string dir) = 0;
+    virtual bool translate(int x, int y) = 0;
+    virtual void levelUp() = 0;
+    virtual void levelDown() = 0;
+    virtual void noRandom(string file) = 0;
+    virtual void setRandom() = 0;
+    virtual void replaceBlock(char c) = 0;
+    virtual void drop() = 0;
+    virtual bool lowerIfHeavy() = 0;
+    virtual int calculateScore(int linesCleared) = 0;
+    virtual void updateFactory() = 0;
     virtual void attachObserver(Observer<Info>* gs) = 0;
 
     // Getter Methods
-    int getScore();
-    int getLevel();
-    Block getNextNextBlock();
+    virtual int getScore() = 0;
+    virtual int getLevel() = 0;
+    virtual Block getNextNextBlock() = 0;
 };
 
 
