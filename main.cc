@@ -5,12 +5,13 @@ using namespace std;
 
 int main(int argc, char * argv[]) {
     int seed = 1, startlevel = 0;
+    bool graphicsActive = true;
     string file1 = "sequence1.txt", file2 = "sequence2.txt";
 
     for (int i = 1; i < argc; i++) {
         string cur = argv[i];
         if (cur == "-text") {
-            // TODO: finish
+            graphicsActive = false;
         } else if (cur == "-seed") {
             if (++i < argc) {
                 int seed = stoi(argv[i]);
@@ -46,5 +47,5 @@ int main(int argc, char * argv[]) {
             return -1;
         }
     }
-    Game game{startlevel, file1, file2};
+    Game game{startlevel, file1, file2, graphicsActive};
 }
