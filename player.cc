@@ -7,10 +7,10 @@
 #include <exception>
 #include <iostream>
 
-Player::Player(string fileName, Observer<Info> * gs): blockID{1}, score{0}, level{0}, starCounter{0}{
+Player::Player(string fileName): blockID{1}, score{0}, level{0}, starCounter{0}{
     levelZeroFile = fileName;
     board = make_unique<Board>();
-    board->init(gs);
+    board->init();
     blockFactory = make_unique<LevelZero>(fileName);
     nextBlock = blockFactory->createBlock();
     nextNextBlock = blockFactory->createBlock();

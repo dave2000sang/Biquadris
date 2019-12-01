@@ -1,7 +1,7 @@
 #include "game_state.h"
 using namespace std;
 
-GameState::GameState() : p1{make_shared<Player>("sequence1.txt", this)}, p2{make_shared<Player>("sequence2.txt", this)}, turn{0},
+GameState::GameState() : p1{make_shared<Player>("sequence1.txt")}, p2{make_shared<Player>("sequence2.txt")}, turn{0},
 td{make_shared<TextDisplay>()} {}
 
 void GameState::rotate(int reps, string dir) {

@@ -1,7 +1,7 @@
 #include "board.h"
 using namespace std;
 
-void Board::init(Observer<Info> * gs, int width, int height) {
+void Board::init(int width, int height) {
     theBoard.clear();
     this->width = width;
     this->height = height;
@@ -11,7 +11,6 @@ void Board::init(Observer<Info> * gs, int width, int height) {
         for (int j = 0; j < width; ++j) {
             Cell newCell = Cell{i, j, 0, ' '};
             theBoard[i].emplace_back(newCell);
-            // theBoard[i][j].attach(gs);
         }
     }
 }
