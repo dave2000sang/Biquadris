@@ -131,7 +131,7 @@ void Board::dropStar() {
         }
     }
     if (!flag) {
-        throw "Game Over";
+        throw string("Game Over");
     }
 }
 
