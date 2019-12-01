@@ -10,8 +10,9 @@ class Game {
     shared_ptr<GameState> game;
     Command cmdInterp;
     int highScore;
+    bool graphicsActive;
   public:
-    Game(int startlevel, std::string file1, std::string file2);
+    Game(int startlevel, std::string file1, std::string file2, bool graphicsActive);
     void play();
     void restart();
 };

@@ -5,10 +5,10 @@
 #include <algorithm>
 using namespace std;
 
-Game::Game(int startlevel, string file1, string file2) : file1{file1}, file2{file2}, startlevel{startlevel}, game{make_shared<GameState>(startlevel, file1, file2)}, highScore{0} {
+Game::Game(int startlevel, string file1, string file2, bool graphicsActive) : file1{file1}, file2{file2}, startlevel{startlevel}, game{make_shared<GameState>(startlevel, file1, file2, graphicsActive)}, highScore{0}, graphicsActive{graphicsActive} {
     game->attachToSubjects();
     game->td->print();
-    game->td->printGraphics();
+    game->gd->printGraphics();
     this->play();
 }
 
@@ -117,7 +117,6 @@ void Game::play() {
             }
 
             game->td->print();
-            // game->td->printGraphics();
 
             // TODO : check game over condition
         }
@@ -130,10 +129,10 @@ void Game::play() {
 }
 
 void Game::restart() {
-    game.reset(new GameState{startlevel, file1, file2});
+    game.reset(new GameState{startlevel, file1, file2, graphicsActive});
     game->attachToSubjects();
     game->td->print();
-    game->td->printGraphics();
+    game->gd->printGraphics();
     this->play();
 }
 
