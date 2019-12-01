@@ -20,7 +20,7 @@ void Game::play() {
         while (true) {
             string input;
             if (readFile && fs.is_open()) {
-                if (!(fs << input)) {
+                if (!(fs >> input)) {
                     readFile = false;
                     fs.close();
                 }
