@@ -31,7 +31,7 @@ class Player {
     Player(string fileName);
     bool blockIsValid();
     void rotate(string dir);
-    void translate(int x, int y);
+    bool translate(int x, int y);
     void levelUp();
     void levelDown();
     void noRandom(string file);
@@ -39,6 +39,7 @@ class Player {
     void replaceBlock(char c);
     void drop();
     void attachObserver(Observer<Info>* gs);
+    bool lowerIfHeavy();
 
     // Getter Methods
     int getScore();
