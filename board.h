@@ -26,6 +26,7 @@ class Board {
     void erase(const Block b);
     void draw(const Block b, int ID);
     void attachObserver(Observer<Info>* gs);
+    void updateLevel();
 
     // helpers
     bool isRowFull(std::vector<Cell> &row);

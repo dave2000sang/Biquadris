@@ -76,6 +76,7 @@ void Player::levelUp(){
     if(level < 4){
         level++;
         updateFactory();
+        board->updateLevel();
     }
 }
 
@@ -83,6 +84,7 @@ void Player::levelDown(){
     if(level > 0){
         level--;
         updateFactory();
+        board->updateLevel();
     }
 }
 
@@ -105,12 +107,6 @@ void Player::replaceBlock(char c){
 int Player::getScore(int linesCleared){
     vector<int> activeIds = board->getIDs();
     int score = 0, levelsCleared = 0;
-
-    cout << "getIDs: ";
-    for(auto anID : activeIds){
-        cout << anID << " ";
-    }
-    cout << endl;
 
     vector<BlockInfo> newActives;
     for(auto someBlockInfo : activeBlocks){
@@ -162,8 +158,8 @@ void Player::drop(){
             starCounter = 0;
         }
 
-        if(starCounter % 5 == 0){
-        board->dropStar();
+        if(starCounter % 5 == 0 && starCounter > 0){
+            board->dropStar();
         }
     }
 }
