@@ -2,6 +2,7 @@
 #define GAME_STATE_H
 
 #include <string>
+#include "abstract_player.h"
 #include "player.h"
 #include "blocks/block.h"
 #include "displays/info.h"
@@ -10,7 +11,7 @@
 #include <memory>
 
 class GameState : public Observer<Info> {
-    std::shared_ptr<Player> p1, p2;
+    std::shared_ptr<AbstractPlayer> p1, p2;
     int turn;
     
   public:

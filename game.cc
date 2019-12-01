@@ -6,8 +6,6 @@
 using namespace std;
 
 Game::Game() : game{make_shared<GameState>()} {
-    game->attachToSubjects();
-    game->td->print();
     this->play();
 }
 

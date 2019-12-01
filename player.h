@@ -1,50 +1,21 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "board.h"
-#include "block_factory/block_factory.h"
-#include "blocks/block.h"
-#include "block_info.h"
-#include <memory>
-#include <vector>
-#include <string>
+#include "abstract_player.h"
 using namespace std;
 
-class GameState;
-class Player {
-    // Helper functions
-    int getScore(int linesCleared);
-    void updateFactory();
-
-  public:
-    //***************************public for testing
-    unique_ptr<Board> board;
-    unique_ptr<BlockFactory> blockFactory;
+class Player : public AbstractPlayer{
+    shared_ptr<Board> board;
+    shared_ptr<BlockFactory> blockFactory;
     string levelZeroFile;
     Block nextBlock;
     Block nextNextBlock;
     vector<BlockInfo> activeBlocks;
     int score, level, blockID, starCounter;
-    //***************************public for testing
 
-
+  public:
     Player(string fileName);
-    bool blockIsValid();
-    void rotate(string dir);
-    bool translate(int x, int y);
-    void levelUp();
-    void levelDown();
-    void noRandom(string file);
-    void setRandom();
-    void replaceBlock(char c);
-    void drop();
-    void attachObserver(Observer<Info>* gs);
-    bool lowerIfHeavy();
-
-    // Getter Methods
-    int getScore();
-    int getLevel();
-    Block getNextNextBlock();
+    void attachObserver(Observer<Info>* gs) override;
 
     // For Testing
     friend std::ostream &operator<<(std::ostream &out, const Player &p);
