@@ -136,24 +136,24 @@ void Board::dropStar() {
 }
 
 void Board::erase(const Block b) {
-    for (int i = 0; i < b.h; i++) {
-        for (int j = 0; j < b.w; j++) {
-            if (b.cells[i][j]) {
-                theBoard[b.y+i][b.x+j].type = ' ';
-                theBoard[b.y+i][b.x+j].id = 0;
-                theBoard[b.y+i][b.x+j].notifyObservers();
+    for (int row = b.h - 1; row >= 0; --row) {
+        for (int col = 0; col < b.w; ++col) {
+            if (b.cells[row][col]) {
+                theBoard[b.y - b.h + row + 1][b.x+col].type = ' ';
+                theBoard[b.y - b.h + row + 1][b.x+col].id = 0;
+                theBoard[b.y - b.h + row + 1][b.x+col].notifyObservers();
             }
         }
     }
 }
 
 void Board::draw(const Block b, int ID) {
-    for (int i = 0; i < b.h; i++) {
-        for (int j = 0; j < b.w; j++) {
-            if (b.cells[i][j]) {  //save
-                theBoard[b.y+i][b.x+j].type = b.type;
-                theBoard[b.y+i][b.x+j].id = ID;
-                theBoard[b.y+i][b.x+j].notifyObservers();
+    for (int row = b.h - 1; row >= 0; --row) {
+        for (int col = 0; col < b.w; ++col) {
+            if (b.cells[row][col]) {  
+                theBoard[b.y - b.h + row + 1][b.x+col].type = b.type;
+                theBoard[b.y - b.h + row + 1][b.x+col].id = ID;
+                theBoard[b.y - b.h + row + 1][b.x+col].notifyObservers();
             }
         }
     }
