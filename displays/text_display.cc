@@ -50,11 +50,19 @@ void TextDisplay::print() {
 
 void TextDisplay::update(Info info) {
     if (info.player == 1) {
-        theDisplay1[info.row][info.col] = info.type == ' ' ? '.' : info.type;
+        if(!info.hidden){
+            theDisplay1[info.row][info.col] = info.type == ' ' ? '.' : info.type;
+        } else{
+            theDisplay1[info.row][info.col] = '?';
+        }
         level_1 = info.level;
         score_1 = info.score;
     } else if (info.player == 2) {
-        theDisplay2[info.row][info.col] = info.type== ' ' ? '.' : info.type;
+        if(!info.hidden){
+            theDisplay2[info.row][info.col] = info.type == ' ' ? '.' : info.type;
+        } else{
+            theDisplay2[info.row][info.col] = '?';
+        }
         level_2 = info.level;
         score_2 = info.score;
     } else {

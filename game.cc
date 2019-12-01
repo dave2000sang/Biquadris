@@ -20,7 +20,7 @@ void Game::play() {
         while (true) {
             string input;
             if (readFile && fs.is_open()) {
-                if (!(fs << input)) {
+                if (!(fs >> input)) {
                     readFile = false;
                     fs.close();
                 }
@@ -34,7 +34,7 @@ void Game::play() {
                     continue;
                 }
             }
-            int multiplier = cmdInterp.parseMultiplier(input);
+            int multiplier = cmdInterp.parseMultiplier(input); 
             CommandType cmd = cmdInterp.parseCommand(input);
             bool invalidInput = false;
             string file;        // for use by sequence and noRandom

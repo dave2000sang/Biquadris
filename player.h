@@ -1,50 +1,40 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "board.h"
-#include "block_factory/block_factory.h"
-#include "blocks/block.h"
-#include "block_info.h"
-#include <memory>
-#include <vector>
-#include <string>
+#include "abstract_player.h"
 using namespace std;
 
-class GameState;
-class Player {
-    // Helper functions
-    int getScore(int linesCleared);
-    void updateFactory();
-
-  public:
-    //***************************public for testing
-    unique_ptr<Board> board;
-    unique_ptr<BlockFactory> blockFactory;
+class Player : public AbstractPlayer{
+    shared_ptr<Board> board;
+    shared_ptr<BlockFactory> blockFactory;
     string levelZeroFile;
     Block nextBlock;
     Block nextNextBlock;
     vector<BlockInfo> activeBlocks;
     int score, level, blockID, starCounter;
-    //***************************public for testing
 
+  public:
+    Player(string fileName);
+    void attachObserver(Observer<Info>* gs) override;
 
-    Player(string fileName, int level);
-    bool blockIsValid();
-    void rotate(string dir);
-    bool translate(int x, int y);
-    void levelUp();
-    void levelDown();
-    void noRandom(string file);
-    void setRandom();
-    void replaceBlock(char c);
-    void drop();
-    void attachObserver(Observer<Info>* gs);
-    bool lowerIfHeavy();
+    bool blockIsValid() override;
+    void rotate(string dir) override;
+    bool translate(int x, int y) override;
+    void levelUp() override;
+    void levelDown() override;
+    void noRandom(string file) override;
+    void setRandom() override;
+    void replaceBlock(char c) override;
+    void toggleBlind(bool blind) override;
+    int drop() override;
+    bool lowerIfHeavy(bool ifLeftRight) override;
+    int calculateScore(int linesCleared) override;
+    void updateFactory() override;
 
     // Getter Methods
-    int getScore();
-    int getLevel();
-    Block getNextNextBlock();
+    int getScore() override;
+    int getLevel() override;
+    Block getNextNextBlock() override;
 
     // For Testing
     friend std::ostream &operator<<(std::ostream &out, const Player &p);

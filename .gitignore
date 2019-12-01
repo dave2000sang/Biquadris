@@ -3,3 +3,4 @@ sequence*.txt
 *.d
 *.o
 biquadris
+test.txt

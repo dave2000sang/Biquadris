@@ -9,8 +9,9 @@ struct Info {
     int player;
     int level;
     int score;
+    bool hidden;
 
-    Info(int row, int col, char type, int player = -1, int level = -1, int score = -1) : row{row}, col{col}, type{type}, player{player}, level{level}, score{score} {}
+    Info(int row, int col, char type, bool hidden, int player = -1, int level = -1, int score = -1) : row{row}, col{col}, type{type}, hidden{hidden}, player{player}, level{level}, score{score} {}
 };
 
 #endif
