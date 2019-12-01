@@ -18,9 +18,7 @@ Player::Player(string fileName): blockID{1}, score{0}, level{0}, starCounter{0}{
 }
 
 bool Player::blockIsValid(){
-    return true;
-    board->erase(nextBlock);
-    vector<vector<bool>> boardBools = board->boardSpace();
+    vector<vector<Cell>> theBoard = board->getBoard();
     vector<vector<bool>> blockBools = nextBlock.getCells();
     int x = nextBlock.getX();
     int y = nextBlock.getY();
@@ -29,13 +27,13 @@ bool Player::blockIsValid(){
 
     for(int row = height - 1; row >= 0; --row){
         for(int col = 0; col < width; ++col){
-            if(blockBools[row][col] && boardBools[y - height + row + 1][x + col]){
-                board->draw(nextBlock, blockID);
-                return false;
+            if(blockBools[row][col] && (theBoard[y - height + row + 1][x + col].type != ' ')){
+                if(theBoard[y - height + row + 1][x + col].id != blockID){
+                    return false;
+                }
             }
         }
     }
-    board->draw(nextBlock, blockID);
     return true;
 }
 
@@ -45,7 +43,7 @@ void Player::rotate(string dir){
         nextBlock = temp;
     } else{
         board->erase(temp);
-        board->draw(nextBlock, this->blockID);
+        board->draw(nextBlock, blockID);
     }
 }
 
