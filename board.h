@@ -20,7 +20,6 @@ class Board {
     int clearLines(); // returns # of lines cleared
     std::vector<int> getIDs(); // unique IDs without 0
     void init(int width = 11, int height = 18);
-    void reverse();
     std::vector<std::vector<Cell>> getBoard();
     void dropStar();
     void erase(const Block b);
