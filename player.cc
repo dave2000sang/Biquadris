@@ -47,13 +47,15 @@ void Player::rotate(string dir){
     }
 }
 
-void Player::translate(int x, int y){
+bool Player::translate(int x, int y){
     Block temp = nextBlock;
     if(!(nextBlock.translate(x, y) && blockIsValid())){
         nextBlock = temp;
+        return false;
     } else{
         board->erase(temp);
         board->draw(nextBlock, blockID);
+        return true;
     }
 }
 
@@ -197,4 +199,11 @@ ostream &operator<<(std::ostream &out, const Player &p) {
 
 void Player::attachObserver(Observer<Info>* gs){
     board->attachObserver(gs);
+}
+
+bool Player::lowerIfHeavy(){
+    if(level >= 3){
+        return this->translate(0,1);
+    }
+    return true;
 }
