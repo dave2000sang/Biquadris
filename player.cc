@@ -55,18 +55,13 @@ void Player::rotate(string dir){
 
 // Translates the next block, if it would end up in a valid position
 bool Player::translate(int x, int y){
-    cout << "Here 1" << endl;
     Block temp = this->nextBlock;
-    cout << "Here 2" << endl;
     if(!(this->nextBlock.translate(x, y) && this->blockIsValid())){
-        cout << "Here 3" << endl;
         this->nextBlock = temp;
         return false;
     } else{
-        cout << "Here 4" << endl;
         this->board->erase(temp);
         this->board->draw(this->nextBlock, blockID);
-        cout << "Here 5" << endl;
         return true;
     }
 }
@@ -155,7 +150,7 @@ int Player::calculateScore(int linesCleared){
 }
 
 // Drops the next block into the board, updates score, and readies the next block
-void Player::drop(){
+int Player::drop(){
     BlockInfo bi{blockID, nextBlock.getLevel()};
     activeBlocks.emplace_back(bi);
 
@@ -184,6 +179,7 @@ void Player::drop(){
             board->dropStar();
         }
     }
+    return linesCleared;
 }
 
 // Getter for score
@@ -202,7 +198,7 @@ Block Player::getNextNextBlock(){
 }
 
 // Lowers the block if it is heavy, returns false if not possible.
-bool Player::lowerIfHeavy(){
+bool Player::lowerIfHeavy(bool isLeftRight){
     if(level >= 3){
         return this->translate(0,1);
     }
@@ -229,4 +225,8 @@ ostream &operator<<(std::ostream &out, const Player &p) {
 
 void Player::attachObserver(Observer<Info>* gs){
     board->attachObserver(gs);
+}
+
+void Player::toggleBlind(bool blind){
+    board->toggleBlind(blind);
 }

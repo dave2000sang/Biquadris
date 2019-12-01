@@ -1,5 +1,8 @@
 #include "game_state.h"
 #include "player.h"
+#include "blind_effect.h"
+#include "heavy_effect.h"
+#include "force_effect.h"
 using namespace std;
 
 GameState::GameState() : p1{make_shared<Player>("sequence1.txt")}, p2{make_shared<Player>("sequence2.txt")}, turn{0},
@@ -14,12 +17,16 @@ void GameState::rotate(int reps, string dir) {
     }
 
     if(turn % 2 == 0){
-        if(!p1->lowerIfHeavy()){
-            p1->drop();
+        if(!p1->lowerIfHeavy(false)){
+            if(p1->drop() >= 2){
+                this->makeEffect(2);
+            }
         }
     } else{
-        if(!p2->lowerIfHeavy()){
-            p2->drop();
+        if(!p2->lowerIfHeavy(false)){
+            if(p2->drop() >= 2){
+                this->makeEffect(2);
+            }
         }
     }
 }
@@ -29,12 +36,12 @@ void GameState::translate(int reps, int x, int y) {
         turn % 2 == 0 ? p1->translate(x, y) : p2->translate(x, y);
     }
     if(turn % 2 == 0){
-        if(!p1->lowerIfHeavy()){
-            p1->drop();
+        if(!p1->lowerIfHeavy(y == 0 && x != 0)){
+            this->drop(1);
         }
     } else{
-        if(!p2->lowerIfHeavy()){
-            p2->drop();
+        if(!p2->lowerIfHeavy(y == 0 && x != 0)){
+            this->drop(1);
         }
     }
 }
@@ -42,7 +49,15 @@ void GameState::translate(int reps, int x, int y) {
 void GameState::drop(int multiplier) {
     for (int i = 0; i < multiplier; i++) {
         try {
-            turn % 2 == 0 ? p1->drop() : p2->drop();
+            if(turn % 2 == 0){
+                if(p1->drop() >= 2){
+                    this->makeEffect(2);
+                }
+            } else{
+                if(p2->drop() >= 2){
+                    this->makeEffect(2);
+                }
+            }
         } catch (string s) {
             // game over for current player.
             if (turn % 2 == 0) {
@@ -100,4 +115,54 @@ void GameState::attachToSubjects(){
     turn++;
     p2->attachObserver(this);
     turn--;
+}
+
+void GameState::makeEffect(int targetPlayer){
+    turn++;
+    targetPlayer = (turn) % 2 + 1;
+    cout << "Give the opponent an effect! (blind, heavy, I, L, O, S, Z, T, J)" << endl; 
+    if(targetPlayer == 1){
+        string response;
+        while(cin >> response){
+            if(response == "blind"){
+                cout << "You blinded the opponent" << endl;
+                p1 = make_shared<BlindEffect>(p1);
+                break;
+            } else if(response == "heavy"){
+                cout << "You made the opponent's blocks heavy" << endl;
+                p1 = make_shared<HeavyEffect>(p1);
+                break;
+            } else if (response == "I" ||response == "J" ||response == "L" ||response == "O" 
+            || response == "S" ||response == "Z" || response == "T" ){
+                char tempChar = response.at(0);
+                cout << "The opponent's next block is now " << tempChar << endl;
+                p1 = make_shared<ForceEffect>(p1, tempChar);
+                break;
+            } else{
+                 cout << "Give the opponent an effect! (blind, heavy, I, L, O, S, Z, T, J)" << endl; 
+            }
+        }
+    } else{
+        string response;
+        while(cin >> response){
+            if(response == "blind"){
+                cout << "You blinded the opponent" << endl;
+                p2 = make_shared<BlindEffect>(p2);
+                break;
+            } else if(response == "heavy"){
+                cout << "You made the opponent's blocks heavy" << endl;
+                p2 = make_shared<HeavyEffect>(p2);
+                break;
+            } else if (response == "I" ||response == "J" ||response == "L" ||response == "O" 
+            || response == "S" ||response == "Z" || response == "T" ){
+                char tempChar = response.at(0);
+                cout << "The opponent's next block is now " << tempChar << endl;
+                p2 = make_shared<ForceEffect>(p2, tempChar);
+                break;
+            } else{
+                 cout << "Give the opponent an effect! (blind, heavy, I, L, O, S, Z, T, J)" << endl; 
+            }
+        }
+    }
+    turn --;
 }

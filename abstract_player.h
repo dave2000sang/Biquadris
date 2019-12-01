@@ -25,8 +25,9 @@ public:
     virtual void noRandom(string file) = 0;
     virtual void setRandom() = 0;
     virtual void replaceBlock(char c) = 0;
-    virtual void drop() = 0;
-    virtual bool lowerIfHeavy() = 0;
+    virtual int drop() = 0;
+    virtual bool lowerIfHeavy(bool isLeftRight) = 0;
+    virtual void toggleBlind(bool blind) = 0;
     virtual int calculateScore(int linesCleared) = 0;
     virtual void updateFactory() = 0;
     virtual void attachObserver(Observer<Info>* gs) = 0;

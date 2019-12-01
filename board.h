@@ -26,6 +26,7 @@ class Board {
     void draw(const Block b, int ID);
     void attachObserver(Observer<Info>* gs);
     void updateLevel();
+    void toggleBlind(bool blind);
 
     // helpers
     bool isRowFull(std::vector<Cell> &row);

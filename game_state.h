@@ -30,6 +30,7 @@ class GameState : public Observer<Info> {
     void replaceBlock(char block);
     int getScore(int player);
     void attachToSubjects();
+    void makeEffect(int targetPlayer);
 };
 
 #endif

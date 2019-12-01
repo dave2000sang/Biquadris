@@ -25,8 +25,9 @@ class Player : public AbstractPlayer{
     void noRandom(string file) override;
     void setRandom() override;
     void replaceBlock(char c) override;
-    void drop() override;
-    bool lowerIfHeavy() override;
+    void toggleBlind(bool blind) override;
+    int drop() override;
+    bool lowerIfHeavy(bool ifLeftRight) override;
     int calculateScore(int linesCleared) override;
     void updateFactory() override;
 

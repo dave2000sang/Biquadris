@@ -185,3 +185,14 @@ void Board::attachObserver(Observer<Info>* gs){
 void Board::updateLevel(){
     theBoard[0][0].notifyObservers();
 }
+
+void Board::toggleBlind(bool blind){
+    for(int i = 0; i < theBoard.size(); i++){
+        for(int j = 0; j < theBoard[0].size(); j++){
+            if((i >= 5 && i <= 14) || (j >= 2 && j <=8)){
+                theBoard[i][j].hidden = blind;
+                theBoard[i][j].notifyObservers();
+            }
+        }
+    }
+}
