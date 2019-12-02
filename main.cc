@@ -38,6 +38,10 @@ int main(int argc, char * argv[]) {
         } else if (cur == "-startlevel") {
             if (++i < argc) {
                 startlevel = stoi(argv[i]);
+                if (startlevel < 0 || startlevel > 4) {
+                    cout << "Invalid startlevel" << endl;
+                    return -1;
+                }
             } else {
                 cout << "Error reading startlevel" << endl;
                 return -1;

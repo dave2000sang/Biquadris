@@ -14,7 +14,7 @@ Player::Player(string fileName, int level): level{level}{
     levelZeroFile = fileName;
     board = make_shared<Board>();
     board->init();
-    blockFactory = make_shared<LevelZero>(fileName);
+    updateFactory();
     nextBlock = blockFactory->createBlock();
     nextNextBlock = blockFactory->createBlock();
     board->draw(nextBlock, blockID);
