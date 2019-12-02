@@ -190,6 +190,7 @@ int Player::getScore(){
 // Setter for score
 void Player::setScore(int s){
     score = s;
+    board->updateLevel();
 }
 
 // Getter for level
