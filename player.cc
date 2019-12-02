@@ -75,7 +75,6 @@ void Player::updateFactory(){
     } else if(level == 2){
         blockFactory = make_shared<LevelTwo>();
     } else if(level == 1){
-        cout << "making level1" << endl;
         blockFactory = make_shared<LevelOne>();
     } else{
         blockFactory = make_shared<LevelZero>(levelZeroFile);
