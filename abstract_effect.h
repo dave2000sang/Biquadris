@@ -27,6 +27,7 @@ class AbstractEffect : public AbstractPlayer{
 
      // Getter Methods
         virtual int getScore() override;
+        virtual void setScore(int s) override;
         virtual int getLevel() override;
         virtual Block getNextNextBlock() override;
 };
