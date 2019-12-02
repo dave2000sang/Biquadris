@@ -3,6 +3,8 @@
 #include "displays/info.h"
 #include "displays/subject.h"
 
+class Block;
+
 struct Cell : public Subject<Info> {
     int row, col;
     int id;

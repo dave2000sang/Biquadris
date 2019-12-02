@@ -7,6 +7,7 @@
 #include <memory>
 #include "info.h"
 #include "window.h"
+#include "../blocks/block.h"
 
 class GraphicsDisplay {
 
@@ -28,6 +29,9 @@ class GraphicsDisplay {
     int boardHeight;
     int nextBlockWidth;
 
+    Block NNB1;
+    Block NNB2;
+
     public:
     bool isActive;
     GraphicsDisplay(bool isActive);
@@ -39,5 +43,7 @@ class GraphicsDisplay {
 
     // helpers
     int getColour(char type);
+    std::vector<std::vector<bool>> blockToBool(Block b); // converts block to 4x4 bools
+    void printNNBs();
 };
 #endif
