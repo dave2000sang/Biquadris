@@ -1,15 +1,21 @@
 #include "level_zero.h"
 #include <iostream>
+#include <exception>
 using namespace std;
 
 // Constructor sets the file and opens filestream
 LevelZero::LevelZero(string fileName){
+    try{
     this->file = fileName;
-    this->in.open(fileName);
+    this->in.open(this->file);
+    } catch(bad_alloc& b){
+        cout << "Error: file " << this->file << " was not found." << endl;
+    }
 }
 
 // Reads a char from the filestream and returns corresponding block
 Block LevelZero::createBlock() {
+    try{
     char c;
     do{
         c = in.get();
@@ -19,7 +25,7 @@ Block LevelZero::createBlock() {
         // Restarts from beginning of file if the end is reached
         in.close();
         in.clear();
-        in.open(this->file);
+        this->in.open(this->file);
         c = in.get();
     }
 
@@ -37,5 +43,9 @@ Block LevelZero::createBlock() {
         return TBlock{0};
     } else if(c == 'Z'){
         return ZBlock{0};
+    }
+    
+    } catch(bad_alloc& b){
+        cout << "Error: file " << this->file << " was not found." << endl;
     }
 }

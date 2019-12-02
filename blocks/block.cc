@@ -72,7 +72,6 @@ bool Block::rotate(string dir) {
 }
 
 bool Block::translate(int x, int y) {
-    cout << "In translate: " << this->w << this->h << endl;
     int x2 = this->x + x;
     int y2 = this->y + y;
     // check if valid translate

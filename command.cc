@@ -8,25 +8,26 @@ using namespace std;
 
 Command::Command() {
     commands = {
-        {"left", CommandType::left},
-        {"right", CommandType::right},
-        {"down", CommandType::down},
-        {"clockwise", CommandType::clockwise},
-        {"counterclockwise", CommandType::counterclockwise},
-        {"drop", CommandType::drop},
-        {"levelup", CommandType::levelup},
-        {"leveldown", CommandType::leveldown},
-        {"norandom", CommandType::norandom},
-        {"random", CommandType::random},
-        {"I", CommandType::I},
-        {"J", CommandType::J},
-        {"L", CommandType::L},
-        {"O", CommandType::O},
-        {"S", CommandType::S},
-        {"Z", CommandType::Z},
-        {"T", CommandType::T},
-        {"sequence", CommandType::sequence},
-        {"restart", CommandType::restart}
+        {"left", {CommandType::left}},
+        {"right", {CommandType::right}},
+        {"down", {CommandType::down}},
+        {"clockwise", {CommandType::clockwise}},
+        {"counterclockwise", {CommandType::counterclockwise}},
+        {"drop", {CommandType::drop}},
+        {"levelup", {CommandType::levelup}},
+        {"leveldown", {CommandType::leveldown}},
+        {"norandom", {CommandType::norandom}},
+        {"random", {CommandType::random}},
+        {"I", {CommandType::I}},
+        {"J", {CommandType::J}},
+        {"L", {CommandType::L}},
+        {"O", {CommandType::O}},
+        {"S", {CommandType::S}},
+        {"Z", {CommandType::Z}},
+        {"T", {CommandType::T}},
+        {"sequence", {CommandType::sequence}},
+        {"restart", {CommandType::restart}},
+        {"macro", {CommandType::macro}}
     };
 }
 
@@ -48,14 +49,14 @@ int Command::parseMultiplier(string &cmd) {
     return 1;
 }
 
-CommandType Command::parseCommand(string cmd) {
+vector<CommandType> Command::parseCommand(string cmd) {
     auto match = commands.find(cmd);
     if (match != commands.end()) {
         return match->second;
     }
 
     // find the partial match
-    vector<CommandType> matches;
+    vector<vector<CommandType>> matches;
     for (auto const &itr : commands) {
         string cur = itr.first;
         for (int i = 0; i < cur.length(); i++) {
@@ -68,5 +69,9 @@ CommandType Command::parseCommand(string cmd) {
         return matches[0];
     }
     // no match
-    return CommandType::nomatch;
+    return {CommandType::nomatch};
+}
+
+void Command::addMacro(string name, vector<CommandType> list){
+    commands.insert(std::pair<string, vector<CommandType>>(name, list));
 }
