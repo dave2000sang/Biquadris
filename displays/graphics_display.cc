@@ -49,6 +49,56 @@ int GraphicsDisplay::getColour(char type) {
     }
 }
 
+vector<vector<bool>> GraphicsDisplay::blockToBool(Block b) {
+    vector<vector<bool>> grid(4);
+    int w = b.getW();
+    int h = b.getH();
+    vector<vector<bool>> cells = b.getCells();
+
+    // initialize grid to 4x4 false
+    for (auto &row : grid) {
+        for (int i = 0; i < 4; i++) {
+            row.emplace_back(false);
+        }
+    }
+
+    for (int row = 0; row < h; ++row) {
+        for (int col = 0; col < w; col++) {
+            if (cells[row][col]) {
+                grid[row][col] = true;
+            } 
+        }
+    }
+
+    return grid;
+}
+
+void GraphicsDisplay::printNNBs() {
+    vector<vector<bool>> grid1 = this->blockToBool(NNB1);
+    vector<vector<bool>> grid2 = this->blockToBool(NNB2);
+    int c1 = getColour(NNB1.getType());
+    int c2 = getColour(NNB2.getType());
+    for (int row = 0; row < 4; ++row) {
+        
+        for (int col = 0; col < 4; ++col) {
+            if (grid1[row][col]) {
+                xwindow->fillRectangle(col * unit, row * unit + 3 * textWidth + boardHeight, unit, unit, c1);
+            } else {
+                xwindow->fillRectangle(col * unit, row * unit + 3 * textWidth + boardHeight, unit, unit, 1);
+            }
+        }
+
+        for (int col = 0; col < 4; ++col) {
+            if (grid2[row][col]) {
+                xwindow->fillRectangle(col * unit + boardWidth + space, row * unit + 3 * textWidth + boardHeight, unit, unit, c2);
+            } else {
+                xwindow->fillRectangle(col * unit + boardWidth + space, row * unit + 3 * textWidth + boardHeight, unit, unit, 1);
+            }
+        }
+
+    }
+}
+
 void GraphicsDisplay::printGraphics() {
     if (!isActive) return;
 
@@ -68,9 +118,10 @@ void GraphicsDisplay::printGraphics() {
         }
     }
 
-    // next block
+    // next next block
     xwindow->drawBigString(textOffset, textOffset + boardHeight + 2 * textWidth, "Next block: ", 1);
     xwindow->drawBigString(textOffset + boardWidth + space, textOffset + boardHeight + 2 * textWidth, "Next block: ", 1);
+    this->printNNBs();
 }
 
 
@@ -95,6 +146,7 @@ void GraphicsDisplay::graphicsPrintNextBlock() {
     if (!isActive) return;
     xwindow->drawBigString(textOffset, textOffset + boardHeight + 2 * textWidth, "Next block: ", 1);
     xwindow->drawBigString(textOffset + boardWidth + space, textOffset + boardHeight + 2 * textWidth, "Next block: ", 1);
+    this->printNNBs();
 }
 
 void GraphicsDisplay::update(Info info) {
@@ -103,6 +155,7 @@ void GraphicsDisplay::update(Info info) {
         theDisplay1[info.row][info.col] = info.type == ' ' ? '.' : info.type;
         level_1 = info.level;
         score_1 = info.score;
+        NNB1 = info.NNB;
         this->graphicsPrintLevelScore();
         this->graphicsPrintCell(1, info.row, info.col, info.type);
         this->graphicsPrintNextBlock();
@@ -110,6 +163,7 @@ void GraphicsDisplay::update(Info info) {
         theDisplay2[info.row][info.col] = info.type== ' ' ? '.' : info.type;
         level_2 = info.level;
         score_2 = info.score;
+        NNB2 = info.NNB;
         this->graphicsPrintLevelScore();
         this->graphicsPrintCell(2, info.row, info.col, info.type);
         this->graphicsPrintNextBlock();

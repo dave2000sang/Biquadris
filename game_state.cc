@@ -98,6 +98,7 @@ void GameState::notify(Subject<Info> &whoFrom) {
     info.player = turn % 2 == 0 ? 1 : 2;
     info.score = turn % 2 == 0 ? p1->getScore() : p2->getScore();
     info.level = turn % 2 == 0 ? p1->getLevel() : p2->getLevel();
+    info.NNB = turn % 2 == 0 ? p1->getNextNextBlock() : p2->getNextNextBlock();
     td->update(info);
     gd->update(info);
 }

@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include "info.h"
+#include "../blocks/block.h"
 
 class TextDisplay {
 
@@ -16,9 +17,16 @@ class TextDisplay {
     std::vector<std::vector<char>> theDisplay2;
     int level_1, level_2, score_1, score_2;
 
+    Block NNB1;
+    Block NNB2;
+
     public:
     TextDisplay();
     void update(Info info);
-    void print(); // textdisplay
+    void print();
+
+    // helpers
+    std::vector<std::vector<bool>> blockToBool(Block b); // converts block to 4x4 bools
+    void printNNBs();
 };
 #endif
