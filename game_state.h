@@ -15,6 +15,7 @@ class GameState : public Observer<Info> {
     std::shared_ptr<AbstractPlayer> p1, p2;
     int turn;
     int startlevel;
+    int curhighscore;
   public:
     bool graphicsActive;
     std::unique_ptr<TextDisplay> td;
@@ -30,7 +31,7 @@ class GameState : public Observer<Info> {
     void noRandom(std::string file);
     void setRandom();
     void replaceBlock(char block);
-    int getScore(int player);
+    int getHighScore();
     void attachToSubjects();
     void makeEffect(int targetPlayer);
 };

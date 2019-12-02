@@ -41,6 +41,7 @@ void Game::play() {
             if (multiplier == 0) {
                 continue;
             }
+          
             for(auto cmd : cmdVec){
                 switch (cmd) {
                     case CommandType::left:
@@ -60,6 +61,7 @@ void Game::play() {
                         break;
                     case CommandType::drop:
                         game->drop(multiplier);
+                        highScore = max(highScore, game->getHighScore());
                         break;
                     case CommandType::levelup:
                         game->levelUp(multiplier);
@@ -144,7 +146,6 @@ void Game::play() {
             // TODO : check game over condition
         }
     } catch(int whoWon) {
-        highScore = max(highScore, max(game->getScore(1), game->getScore(2)));
         cout << "Player " << whoWon << " Wins!" << endl;
         cout << "High Score = " << highScore << endl;
         this->restart();
