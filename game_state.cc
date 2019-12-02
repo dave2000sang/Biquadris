@@ -17,15 +17,11 @@ void GameState::rotate(int reps, string dir) {
 
     if(turn % 2 == 0){
         if(!p1->lowerIfHeavy(false)){
-            if(p1->drop() >= 2){
-                this->makeEffect(2);
-            }
+            this->drop(1);
         }
     } else{
         if(!p2->lowerIfHeavy(false)){
-            if(p2->drop() >= 2){
-                this->makeEffect(2);
-            }
+            this->drop(1);
         }
     }
 }
