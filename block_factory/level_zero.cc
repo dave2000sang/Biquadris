@@ -49,3 +49,4 @@ Block LevelZero::createBlock() {
         cout << "Error: file " << this->file << " was not found." << endl;
     }
 }
+

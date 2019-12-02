@@ -74,3 +74,5 @@ void AbstractEffect::toggleBlind(bool blind){
 void AbstractEffect::attachObserver(Observer<Info>* gs){
     prevPlayer->attachObserver(gs);
 }
+
+

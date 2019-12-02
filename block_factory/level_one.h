@@ -10,3 +10,4 @@ class LevelOne : public BlockFactory {
 };
 
 #endif
+

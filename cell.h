@@ -18,3 +18,5 @@ struct Cell : public Subject<Info> {
 };
 
 #endif
+
+

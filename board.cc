@@ -196,3 +196,4 @@ void Board::toggleBlind(bool blind){
         }
     }
 }
+

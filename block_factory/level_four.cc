@@ -76,3 +76,4 @@ void LevelFour::setFile(string fileName) {
         cout << "Error: file " << this->file << " was not found." << endl;
     }
 }
+
