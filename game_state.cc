@@ -5,8 +5,8 @@
 #include "force_effect.h"
 using namespace std;
 
+GameState::GameState(int startlevel, string file1, string file2, bool graphicsActive) : startlevel{startlevel}, curhighscore{0},
 
-GameState::GameState(int startlevel, string file1, string file2, bool graphicsActive) : startlevel{startlevel},
     p1{make_shared<Player>(file1, startlevel)}, p2{make_shared<Player>(file2, startlevel)}, turn{0}, td{make_unique<TextDisplay>()}, gd{make_unique<GraphicsDisplay>(graphicsActive)}, graphicsActive{graphicsActive} {}
 
 void GameState::rotate(int reps, string dir) {
@@ -56,6 +56,7 @@ void GameState::drop(int multiplier) {
                     this->makeEffect(2);
                 }
             }
+            curhighscore = max(curhighscore, max(p1->getScore(), p2->getScore()));
         } catch (string s) {
             // game over for current player.
             if (turn % 2 == 0) {
@@ -101,19 +102,16 @@ void GameState::notify(Subject<Info> &whoFrom) {
     gd->update(info);
 }
 
-int GameState::getScore(int player) {
-    if (player == 1) {
-        return p1->getScore();
-    } else {
-        return p2->getScore();
-    }
-}
-
 void GameState::attachToSubjects(){
     p1->attachObserver(this);
     turn++;
     p2->attachObserver(this);
     turn--;
+}
+
+
+int GameState::getHighScore() {
+    return curhighscore;
 }
 
 void GameState::makeEffect(int targetPlayer){
