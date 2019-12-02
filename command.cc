@@ -75,3 +75,5 @@ vector<CommandType> Command::parseCommand(string cmd) {
 void Command::addMacro(string name, vector<CommandType> list){
     commands.insert(std::pair<string, vector<CommandType>>(name, list));
 }
+
+
