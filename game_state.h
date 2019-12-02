@@ -15,6 +15,7 @@ class GameState : public Observer<Info> {
     int startlevel;
     int curhighscore;
     int turn;
+    std::string file1, file2;
     std::shared_ptr<AbstractPlayer> p1, p2;
   public:
     bool graphicsActive;
@@ -34,6 +35,7 @@ class GameState : public Observer<Info> {
     int getHighScore();
     void attachToSubjects();
     void makeEffect(int targetPlayer);
+    void restart();
 };
 
 #endif
