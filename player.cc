@@ -162,7 +162,6 @@ int Player::drop(){
     nextNextBlock = blockFactory->createBlock();
 
     if(!blockIsValid()){
-        cout << "before throw game over " << endl;
         throw string("Game Over");
     }
 
@@ -231,6 +230,7 @@ ostream &operator<<(std::ostream &out, const Player &p) {
 
 void Player::attachObserver(Observer<Info>* gs){
     board->attachObserver(gs);
+    board->draw(nextBlock, blockID);
 }
 
 void Player::toggleBlind(bool blind){

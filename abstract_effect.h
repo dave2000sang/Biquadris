@@ -33,3 +33,4 @@ class AbstractEffect : public AbstractPlayer{
 };
 
 #endif
+

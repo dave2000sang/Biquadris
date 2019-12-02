@@ -177,7 +177,7 @@ void Board::attachObserver(Observer<Info>* gs){
     for(auto &row : theBoard){
         for(auto &aCell : row){
             aCell.attach(gs);
-            aCell.notifyObservers();
+            // aCell.notifyObservers();
         }
     }
 }
@@ -196,3 +196,4 @@ void Board::toggleBlind(bool blind){
         }
     }
 }
+

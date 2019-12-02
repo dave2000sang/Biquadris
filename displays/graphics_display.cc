@@ -103,17 +103,23 @@ void GraphicsDisplay::printGraphics() {
     if (!isActive) return;
 
     // level and score
+    xwindow->fillRectangle(0, 0, boardWidth, textWidth * 2, 0);
+    xwindow->fillRectangle(boardWidth + space, 0, boardWidth, textWidth * 2, 0);
     xwindow->drawBigString(textOffset, textOffset, "Level: " + to_string(level_1), 1);
     xwindow->drawBigString(textOffset + boardWidth + space, textOffset, "Level: " + to_string(level_2), 1);
     xwindow->drawBigString(textOffset, textOffset + textWidth, "Score: " + to_string(score_1), 1);
     xwindow->drawBigString(textOffset + boardWidth + space, textOffset + textWidth, "Score: " + to_string(score_2), 1);
 
     // ith row
+    xwindow->fillRectangle(0, textWidth * 2, boardWidth, boardHeight, 1);
+    xwindow->fillRectangle(boardWidth + space, textWidth * 2, boardWidth, boardHeight, 1);
     for (int i = 0; i < 18; ++i) {
         for (int j = 0; j < 11; ++j) {
+            if (theDisplay1[i][j] == ' ' || theDisplay1[i][j] == '.') continue;
             xwindow->fillRectangle(j * unit, i * unit + 2 * textWidth, unit, unit, getColour(theDisplay1[i][j]));
         }
         for (int j = 0; j < 11; ++j) {
+            if (theDisplay2[i][j] == ' ' || theDisplay2[i][j] == '.') continue;
             xwindow->fillRectangle(boardWidth + space + j * unit, i * unit + 2 * textWidth, unit, unit, getColour(theDisplay2[i][j]));
         }
     }
@@ -127,6 +133,8 @@ void GraphicsDisplay::printGraphics() {
 
 void GraphicsDisplay::graphicsPrintLevelScore() {
     if (!isActive) return;
+    xwindow->fillRectangle(0, 0, boardWidth, textWidth * 2, 0);
+    xwindow->fillRectangle(boardWidth + space, 0, boardWidth, textWidth * 2, 0);
     xwindow->drawBigString(textOffset, textOffset, "Level: " + to_string(level_1), 1);
     xwindow->drawBigString(textOffset + boardWidth + space, textOffset, "Level: " + to_string(level_2), 1);
     xwindow->drawBigString(textOffset, textOffset + textWidth, "Score: " + to_string(score_1), 1);

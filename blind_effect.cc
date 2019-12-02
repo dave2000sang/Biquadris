@@ -11,3 +11,4 @@ int BlindEffect::drop(){
     prevPlayer->toggleBlind(false);
     return prevPlayer->drop();
 }
+

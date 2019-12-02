@@ -6,8 +6,8 @@ TextDisplay::TextDisplay(): level_1{0}, level_2{0}, score_1{0}, score_2{0}{
         vector<char> temp1;
         vector<char> temp2;
         for(int j = 0; j < width; ++j){
-            temp1.emplace_back('.');
-            temp2.emplace_back('.');
+            temp1.emplace_back(' ');
+            temp2.emplace_back(' ');
         }
         theDisplay1.emplace_back(temp1);
         theDisplay2.emplace_back(temp2);
@@ -56,7 +56,7 @@ void TextDisplay::printNNBs() {
             if (grid1[row][col]) {
                 cout << type1;
             } else {
-                cout << '.';
+                cout << ' ';
             }
         }
 
@@ -66,7 +66,7 @@ void TextDisplay::printNNBs() {
             if (grid2[row][col]) {
                 cout << type2;
             } else {
-                cout << '.';
+                cout << ' ';
             }
         }
 
@@ -112,8 +112,6 @@ void TextDisplay::print() {
     cout << border << space << border << endl;
     cout << "Next:      " << space << "Next:      " << endl;
     this->printNNBs();
-    // cout << NNB1 << endl;
-    // cout << NNB2 << endl;
 }
 
 
@@ -121,7 +119,7 @@ void TextDisplay::print() {
 void TextDisplay::update(Info info) {
     if (info.player == 1) {
         if(!info.hidden){
-            theDisplay1[info.row][info.col] = info.type == ' ' ? '.' : info.type;
+            theDisplay1[info.row][info.col] = info.type == ' ' ? ' ' : info.type;
         } else{
             theDisplay1[info.row][info.col] = '?';
         }
@@ -130,7 +128,7 @@ void TextDisplay::update(Info info) {
         NNB1 = info.NNB;
     } else if (info.player == 2) {
         if(!info.hidden){
-            theDisplay2[info.row][info.col] = info.type == ' ' ? '.' : info.type;
+            theDisplay2[info.row][info.col] = info.type == ' ' ? ' ' : info.type;
         } else{
             theDisplay2[info.row][info.col] = '?';
         }

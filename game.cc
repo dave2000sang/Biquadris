@@ -88,10 +88,10 @@ void Game::play() {
                         if (cin >> file) {
                             readFile = true;
                         fs.open(file);
-                    } else {
-                        invalidInput = true;
-                    }
-                    break;
+                        } else {
+                            invalidInput = true;
+                        }
+                        break;
                     case CommandType::I:
                         game->replaceBlock('I');
                         break;
