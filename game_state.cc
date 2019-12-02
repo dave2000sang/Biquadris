@@ -3,6 +3,7 @@
 #include "blind_effect.h"
 #include "heavy_effect.h"
 #include "force_effect.h"
+#include "reduce_effect.h"
 using namespace std;
 
 GameState::GameState(int startlevel, string file1, string file2, bool graphicsActive) : startlevel{startlevel}, curhighscore{0},
@@ -117,7 +118,7 @@ int GameState::getHighScore() {
 void GameState::makeEffect(int targetPlayer){
     turn++;
     targetPlayer = (turn) % 2 + 1;
-    cout << "Give the opponent an effect! (blind, heavy, I, L, O, S, Z, T, J)" << endl; 
+    cout << "Give the opponent an effect! (blind, heavy, reduce, I, L, O, S, Z, T, J)" << endl; 
     if(targetPlayer == 1){
         string response;
         while(cin >> response){
@@ -135,8 +136,12 @@ void GameState::makeEffect(int targetPlayer){
                 cout << "The opponent's next block is now " << tempChar << endl;
                 p1 = make_shared<ForceEffect>(p1, tempChar);
                 break;
+            } else if (response == "reduce"){
+                cout << "Your opponent gains 1/2 as many points" << endl;
+                p1 = make_shared<ReduceEffect>(p1);
+                break;
             } else{
-                 cout << "Give the opponent an effect! (blind, heavy, I, L, O, S, Z, T, J)" << endl; 
+                 cout << "Give the opponent an effect! (blind, heavy, reduce, I, L, O, S, Z, T, J)" << endl; 
             }
         }
     } else{
@@ -156,8 +161,12 @@ void GameState::makeEffect(int targetPlayer){
                 cout << "The opponent's next block is now " << tempChar << endl;
                 p2 = make_shared<ForceEffect>(p2, tempChar);
                 break;
+            } else if (response == "reduce"){
+                cout << "Your opponent gains 1/2 as many points" << endl;
+                p2 = make_shared<ReduceEffect>(p2);
+                break;
             } else{
-                 cout << "Give the opponent an effect! (blind, heavy, I, L, O, S, Z, T, J)" << endl; 
+                 cout << "Give the opponent an effect! (blind, heavy, reduce, I, L, O, S, Z, T, J)" << endl; 
             }
         }
     }

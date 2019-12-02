@@ -34,6 +34,7 @@ public:
 
     // Getter Methods
     virtual int getScore() = 0;
+    virtual void setScore(int s) = 0;
     virtual int getLevel() = 0;
     virtual Block getNextNextBlock() = 0;
 };

@@ -55,6 +55,10 @@ int AbstractEffect::getScore(){
     return prevPlayer->getScore();
 }
 
+void AbstractEffect::setScore(int s){
+    prevPlayer->setScore(s);
+}
+
 int AbstractEffect::getLevel(){
     return prevPlayer->getLevel();
 }

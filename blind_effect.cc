@@ -2,9 +2,7 @@
 using namespace std;
 
 BlindEffect::BlindEffect(shared_ptr<AbstractPlayer> ab): AbstractEffect(ab){
-    cout << "In BlindEffect const" << endl;
-    prevPlayer->toggleBlind(true);  
-    cout << "After toggleBlind" << endl;
+    prevPlayer->toggleBlind(true);
 }
 
 BlindEffect::~BlindEffect(){}

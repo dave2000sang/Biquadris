@@ -187,6 +187,11 @@ int Player::getScore(){
     return score;
 }
 
+// Setter for score
+void Player::setScore(int s){
+    score = s;
+}
+
 // Getter for level
 int Player::getLevel(){
     return level;

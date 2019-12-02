@@ -31,8 +31,9 @@ class Player : public AbstractPlayer{
     int calculateScore(int linesCleared) override;
     void updateFactory() override;
 
-    // Getter Methods
+    // Getter and Setter Methods
     int getScore() override;
+    void setScore(int s) override;
     int getLevel() override;
     Block getNextNextBlock() override;
 
