@@ -1,0 +1,10 @@
+norandom tests/star.script
+O drop 
+norandom tests/star.script 
+O drop
+O 2ri drop O 2ri drop
+9ri drop 9ri drop
+7ri drop 7ri drop
+
+I clo 4ri drop I clo 4ri drop
+I clo 6ri
