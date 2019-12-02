@@ -14,7 +14,7 @@ Player::Player(string fileName, int level): level{level}{
     levelZeroFile = fileName;
     board = make_shared<Board>();
     board->init();
-    blockFactory = make_shared<LevelZero>(fileName);
+    updateFactory();
     nextBlock = blockFactory->createBlock();
     nextNextBlock = blockFactory->createBlock();
     board->draw(nextBlock, blockID);
@@ -75,6 +75,7 @@ void Player::updateFactory(){
     } else if(level == 2){
         blockFactory = make_shared<LevelTwo>();
     } else if(level == 1){
+        cout << "making level1" << endl;
         blockFactory = make_shared<LevelOne>();
     } else{
         blockFactory = make_shared<LevelZero>(levelZeroFile);
