@@ -70,11 +70,16 @@ void Game::play() {
                         game->levelDown(multiplier);
                         break;
                     case CommandType::norandom:
-                        if (cin >> file) {
+                        if(readFile){
+                            fs >> file;
                             game->noRandom(file);
-                    } else {
-                        invalidInput = true;
-                    }
+                        } else{
+                            if (cin >> file) {
+                                game->noRandom(file);
+                            } else {
+                                invalidInput = true;
+                            }
+                        }                        
                     break;
                     case CommandType::random:
                         game->setRandom();
