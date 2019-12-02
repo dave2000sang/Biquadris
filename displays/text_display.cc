@@ -112,8 +112,6 @@ void TextDisplay::print() {
     cout << border << space << border << endl;
     cout << "Next:      " << space << "Next:      " << endl;
     this->printNNBs();
-    // cout << NNB1 << endl;
-    // cout << NNB2 << endl;
 }
 
 

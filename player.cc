@@ -162,7 +162,6 @@ int Player::drop(){
     nextNextBlock = blockFactory->createBlock();
 
     if(!blockIsValid()){
-        cout << "before throw game over " << endl;
         throw string("Game Over");
     }
 
