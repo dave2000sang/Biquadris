@@ -10,7 +10,11 @@ LevelZero::LevelZero(string fileName){
 
 // Reads a char from the filestream and returns corresponding block
 Block LevelZero::createBlock() {
-    char c = in.get();
+    char c;
+    do{
+        c = in.get();
+    } while(c == 10 || c == 32);
+    
     if(in.eof()){
         // Restarts from beginning of file if the end is reached
         in.close();

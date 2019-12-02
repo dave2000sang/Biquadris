@@ -7,16 +7,20 @@
 #include <exception>
 #include <iostream>
 
-Player::Player(string fileName, int level): blockID{1}, score{0}, level{level}, starCounter{0}{
+Player::Player(string fileName, int level): level{level}{
+    this->blockID = 1;
+    this->score = 0;
+    this->starCounter = 0;
     levelZeroFile = fileName;
-    board = make_unique<Board>();
+    board = make_shared<Board>();
     board->init();
-    blockFactory = make_unique<LevelZero>(fileName);
+    blockFactory = make_shared<LevelZero>(fileName);
     nextBlock = blockFactory->createBlock();
     nextNextBlock = blockFactory->createBlock();
     board->draw(nextBlock, blockID);
 }
 
+// Checks if the current "next block" is in a valid position, withhout collisions
 bool Player::blockIsValid(){
     vector<vector<Cell>> theBoard = board->getBoard();
     vector<vector<bool>> blockBools = nextBlock.getCells();
@@ -37,6 +41,7 @@ bool Player::blockIsValid(){
     return true;
 }
 
+// Rotates the next block, if it would end up in a valid position
 void Player::rotate(string dir){
     Block temp = nextBlock;
     if(!(nextBlock.rotate(dir) && blockIsValid())){
@@ -47,33 +52,36 @@ void Player::rotate(string dir){
     }
 }
 
+// Translates the next block, if it would end up in a valid position
 bool Player::translate(int x, int y){
-    Block temp = nextBlock;
-    if(!(nextBlock.translate(x, y) && blockIsValid())){
-        nextBlock = temp;
+    Block temp = this->nextBlock;
+    if(!(this->nextBlock.translate(x, y) && this->blockIsValid())){
+        this->nextBlock = temp;
         return false;
     } else{
-        board->erase(temp);
-        board->draw(nextBlock, blockID);
+        this->board->erase(temp);
+        this->board->draw(this->nextBlock, blockID);
         return true;
     }
 }
 
+// Creates a new block factory based on the current level
 void Player::updateFactory(){
     starCounter = 0;
     if(level == 4){
-        blockFactory = make_unique<LevelFour>();
+        blockFactory = make_shared<LevelFour>();
     } else if(level == 3){
-        blockFactory = make_unique<LevelThree>();
+        blockFactory = make_shared<LevelThree>();
     } else if(level == 2){
-        blockFactory = make_unique<LevelTwo>();
+        blockFactory = make_shared<LevelTwo>();
     } else if(level == 1){
-        blockFactory = make_unique<LevelOne>();
+        blockFactory = make_shared<LevelOne>();
     } else{
-        blockFactory = make_unique<LevelZero>(levelZeroFile);
+        blockFactory = make_shared<LevelZero>(levelZeroFile);
     }
 }
 
+// Levels up the player and creates the corresponding block factory
 void Player::levelUp(){
     if(level < 4){
         level++;
@@ -82,6 +90,7 @@ void Player::levelUp(){
     }
 }
 
+// Levels down the player and creates the corresponding block factory
 void Player::levelDown(){
     if(level > 0){
         level--;
@@ -90,23 +99,27 @@ void Player::levelDown(){
     }
 }
 
+// Makes Levels 3 and 4 read input from a file, rather than randomly
 void Player::noRandom(string file){
     blockFactory->setFile(file);
 }
 
+// Allows Levels 3 or 4 to randomly generate blocks again
 void Player::setRandom(){
     board->erase(nextBlock);
     blockFactory->setRandom();
     board->draw(nextBlock, blockID);
 }
 
+// Replaces the next block with the type of block specified
 void Player::replaceBlock(char c){
     board->erase(nextBlock);
     nextBlock = blockFactory->specificBlock(c, level);
     board->draw(nextBlock, blockID);
 }
 
-int Player::getScore(int linesCleared){
+// Helper function to calculate the score based on lines and blocks cleared
+int Player::calculateScore(int linesCleared){
     vector<int> activeIds = board->getIDs();
     int score = 0, levelsCleared = 0;
 
@@ -135,14 +148,15 @@ int Player::getScore(int linesCleared){
     return score;
 }
 
-void Player::drop(){
+// Drops the next block into the board, updates score, and readies the next block
+int Player::drop(){
     BlockInfo bi{blockID, nextBlock.getLevel()};
     activeBlocks.emplace_back(bi);
 
     board->erase(nextBlock);
     int linesCleared = board->drop(nextBlock, blockID);
     blockID++;
-    score += this->getScore(linesCleared);
+    score += this->calculateScore(linesCleared);
 
     nextBlock = nextNextBlock;
     nextNextBlock = blockFactory->createBlock();
@@ -165,18 +179,30 @@ void Player::drop(){
             board->dropStar();
         }
     }
+    return linesCleared;
 }
 
+// Getter for score
 int Player::getScore(){
     return score;
 }
 
+// Getter for level
 int Player::getLevel(){
     return level;
 }
 
+// Getter for nextNextBlock
 Block Player::getNextNextBlock(){
     return nextNextBlock;
+}
+
+// Lowers the block if it is heavy, returns false if not possible.
+bool Player::lowerIfHeavy(bool isLeftRight){
+    if(level >= 3){
+        return this->translate(0,1);
+    }
+    return true;
 }
 
 ostream &operator<<(std::ostream &out, const Player &p) {
@@ -201,9 +227,6 @@ void Player::attachObserver(Observer<Info>* gs){
     board->attachObserver(gs);
 }
 
-bool Player::lowerIfHeavy(){
-    if(level >= 3){
-        return this->translate(0,1);
-    }
-    return true;
+void Player::toggleBlind(bool blind){
+    board->toggleBlind(blind);
 }

@@ -22,7 +22,11 @@ Block LevelThree::createBlock() {
             return ZBlock{3};
         }
     } else{
-        char c = in.get();
+        char c;
+        do{
+            c = in.get();
+        } while(c == 10 || c == 32);
+    
         if(in.eof()){
             // Restarts from beginning of file if the end is reached
             in.close();
