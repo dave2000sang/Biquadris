@@ -35,81 +35,104 @@ void Game::play() {
                 }
             }
             int multiplier = cmdInterp.parseMultiplier(input); 
-            CommandType cmd = cmdInterp.parseCommand(input);
+            vector<CommandType> cmdVec = cmdInterp.parseCommand(input);
             bool invalidInput = false;
             string file;        // for use by sequence and noRandom
             if (multiplier == 0) {
                 continue;
             }
-            switch (cmd) {
-                case CommandType::left:
-                    game->translate(multiplier, -1, 0);
-                    break;
-                case CommandType::right:
-                    game->translate(multiplier, 1, 0);
-                    break;
-                case CommandType::down:
-                    game->translate(multiplier, 0, 1);
-                    break;
-                case CommandType::clockwise:
-                    game->rotate(multiplier, "cw");
-                    break;
-                case CommandType::counterclockwise:
-                    game->rotate(multiplier, "ccw");
-                    break;
-                case CommandType::drop:
-                    game->drop(multiplier);
-                    break;
-                case CommandType::levelup:
-                    game->levelUp(multiplier);
-                    break;
-                case CommandType::leveldown:
-                    game->levelDown(multiplier);
-                    break;
-                case CommandType::norandom:
-                    if (cin >> file) {
-                        game->noRandom(file);
+            for(auto cmd : cmdVec){
+                switch (cmd) {
+                    case CommandType::left:
+                        game->translate(multiplier, -1, 0);
+                        break;
+                    case CommandType::right:
+                        game->translate(multiplier, 1, 0);
+                        break;
+                    case CommandType::down:
+                        game->translate(multiplier, 0, 1);
+                        break;
+                    case CommandType::clockwise:
+                        game->rotate(multiplier, "cw");
+                        break;
+                    case CommandType::counterclockwise:
+                        game->rotate(multiplier, "ccw");
+                        break;
+                    case CommandType::drop:
+                        game->drop(multiplier);
+                        break;
+                    case CommandType::levelup:
+                        game->levelUp(multiplier);
+                        break;
+                    case CommandType::leveldown:
+                        game->levelDown(multiplier);
+                        break;
+                    case CommandType::norandom:
+                        if (cin >> file) {
+                            game->noRandom(file);
                     } else {
                         invalidInput = true;
                     }
                     break;
-                case CommandType::random:
-                    game->setRandom();
-                    break;
-                case CommandType::sequence:
-                    if (cin >> file) {
-                        readFile = true;
+                    case CommandType::random:
+                        game->setRandom();
+                        break;
+                    case CommandType::sequence:
+                        if (cin >> file) {
+                            readFile = true;
                         fs.open(file);
                     } else {
                         invalidInput = true;
                     }
                     break;
-                case CommandType::I:
-                    game->replaceBlock('I');
-                    break;
-                case CommandType::J:
-                    game->replaceBlock('J');
-                    break;
-                case CommandType::L:
-                    game->replaceBlock('L');
-                    break;
-                case CommandType::O:
-                    game->replaceBlock('O');
-                    break;
-                case CommandType::S:
-                    game->replaceBlock('S');
-                    break;
-                case CommandType::Z:
-                    game->replaceBlock('Z');
-                    break;
-                case CommandType::T:
-                    game->replaceBlock('T');
-                    break;
-                case CommandType::restart:
-                    this->restart();
-                    break;
-                default:
-                    invalidInput = true;
+                    case CommandType::I:
+                        game->replaceBlock('I');
+                        break;
+                    case CommandType::J:
+                        game->replaceBlock('J');
+                        break;
+                    case CommandType::L:
+                        game->replaceBlock('L');
+                        break;
+                    case CommandType::O:
+                        game->replaceBlock('O');
+                        break;
+                    case CommandType::S:
+                        game->replaceBlock('S');
+                        break;
+                    case CommandType::Z:
+                        game->replaceBlock('Z');
+                        break;
+                    case CommandType::T:
+                        game->replaceBlock('T');
+                        break;
+                    case CommandType::restart:
+                        this->restart();
+                        break;
+                    case CommandType::macro:
+                    {
+                        vector<CommandType> macroList;
+                        string nextCmd, macroName;
+                        if(cin >> macroName){
+                            while(cin >> nextCmd){
+                                int newCmdMultiplier = cmdInterp.parseMultiplier(nextCmd);
+                                vector<CommandType> newCmdVec = cmdInterp.parseCommand(nextCmd);
+                                for(auto nestedCmd : newCmdVec){
+                                    for(int i = 0; i < newCmdMultiplier; i++){
+                                        macroList.emplace_back(nestedCmd);
+                                    }
+                                }
+                                if(cin.peek() == 10){
+                                    break;
+                                }
+                            }
+                            cmdInterp.addMacro(macroName, macroList);
+                        }
+                        break;
+                    }
+                    default:
+                        invalidInput = true;
+                }
             }
             if (invalidInput) {
                 cout << "Invalid command" << endl;
@@ -135,4 +158,3 @@ void Game::restart() {
     game->gd->printGraphics();
     this->play();
 }
-

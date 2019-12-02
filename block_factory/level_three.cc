@@ -1,8 +1,13 @@
 #include "level_three.h"
 #include <cstdlib>
+#include <exception>
+#include <iostream>
 using namespace std;
 
 Block LevelThree::createBlock() {
+    try{
+
+    
     if(random){
         int num = rand() % 9;      // generates number from 0 to 8 inclusive
 
@@ -51,6 +56,10 @@ Block LevelThree::createBlock() {
             return ZBlock{3};
         }
     }
+
+    } catch(bad_alloc& b){
+        cout << "Error: file " << this->file << " was not found." << endl;
+    }
 }
 
 void LevelThree::setRandom() {
@@ -58,7 +67,13 @@ void LevelThree::setRandom() {
 }
 
 void LevelThree::setFile(string fileName) {
+    try{
+
     this->file = fileName;
     this->random = false;
-    this->in.open(fileName);
+    this->in.open(this->file);
+    
+    } catch(bad_alloc& b){
+        cout << "Error: file " << this->file << " was not found." << endl;
+    }
 }
