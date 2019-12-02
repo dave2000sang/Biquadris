@@ -117,6 +117,8 @@ int GameState::getHighScore() {
 }
 
 void GameState::makeEffect(int targetPlayer){
+    td->print();
+    
     turn++;
     targetPlayer = (turn) % 2 + 1;
     cout << "Give the opponent an effect! (blind, heavy, reduce, I, L, O, S, Z, T, J)" << endl; 

@@ -72,10 +72,10 @@ void Game::play() {
                     case CommandType::norandom:
                         if (cin >> file) {
                             game->noRandom(file);
-                    } else {
-                        invalidInput = true;
-                    }
-                    break;
+                        } else {
+                            invalidInput = true;
+                        }
+                        break;
                     case CommandType::random:
                         game->setRandom();
                         break;
@@ -83,10 +83,10 @@ void Game::play() {
                         if (cin >> file) {
                             readFile = true;
                         fs.open(file);
-                    } else {
-                        invalidInput = true;
-                    }
-                    break;
+                        } else {
+                            invalidInput = true;
+                        }
+                        break;
                     case CommandType::I:
                         game->replaceBlock('I');
                         break;
