@@ -1,1 +1,1 @@
--scriptfile1 tests/effects.script
+-scriptfile1 tests/effects.script -scriptfile2 tests/effects.script

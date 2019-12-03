@@ -75,7 +75,7 @@ bool Block::translate(int x, int y) {
     int x2 = this->x + x;
     int y2 = this->y + y;
     // check if valid translate
-    if (x2 >= 0 && y2 - (h-1) >= 0 && x2 + w <= 11 && y2 <= 18) {
+    if (x2 >= 0 && y2 - (h-1) >= 0 && x2 + w <= 11 && y2 < 18) {
         this->x = x2;
         this->y = y2;
         return true;
