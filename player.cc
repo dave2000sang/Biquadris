@@ -205,6 +205,10 @@ Block Player::getNextNextBlock(){
 // Lowers the block if it is heavy, returns false if not possible.
 bool Player::lowerIfHeavy(bool isLeftRight){
     if(level >= 3){
+        if(nextBlock.getY() >= 17){
+            cout << "heavy at bottom";
+            return false;
+        }
         return this->translate(0,1);
     }
     return true;

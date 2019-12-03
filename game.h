@@ -7,7 +7,7 @@
 class Game {
     int startlevel;
     std::string file1, file2;
-    shared_ptr<GameState> game;
+    unique_ptr<GameState> game;
     Command cmdInterp;
     int highScore;
     bool graphicsActive;
