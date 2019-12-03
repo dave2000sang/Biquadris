@@ -37,12 +37,12 @@ class GraphicsDisplay {
     GraphicsDisplay(bool isActive);
     void update(Info info);
     void graphicsPrintLevelScore();
-    void graphicsPrintCell(int player, int row, int col, char type);
+    void graphicsPrintCell(int player, int row, int col, char type, bool hidden);
     void graphicsPrintNextBlock();
     void printGraphics(); // play and restart
 
     // helpers
-    int getColour(char type);
+    int getColour(char type, bool hidden);
     std::vector<std::vector<bool>> blockToBool(Block b); // converts block to 4x4 bools
     void printNNBs();
 };

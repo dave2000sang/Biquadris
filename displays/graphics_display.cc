@@ -14,8 +14,8 @@ GraphicsDisplay::GraphicsDisplay(bool isActive): level_1{0}, level_2{0}, score_1
     }
 
     unit = 30;
-    textWidth = 30;
-    textOffset = 20;
+    textWidth = 100;
+    textOffset = 60;
     boardWidth = width * unit;
     space = 100;
     boardHeight = height * unit;
@@ -25,8 +25,10 @@ GraphicsDisplay::GraphicsDisplay(bool isActive): level_1{0}, level_2{0}, score_1
     xwindow = make_unique<Xwindow>(boardWidth * 2 + space, boardHeight + 3 * textWidth + nextBlockWidth);
 }
 
-int GraphicsDisplay::getColour(char type) {
-    if (type == '.' || type == ' ') {
+int GraphicsDisplay::getColour(char type, bool hidden) {
+    if (hidden) {
+        return 0;
+    } else if (type == '.' || type == ' ') {
         return 1;
     } else if (type == 'I') {
         return 2;
@@ -76,8 +78,8 @@ vector<vector<bool>> GraphicsDisplay::blockToBool(Block b) {
 void GraphicsDisplay::printNNBs() {
     vector<vector<bool>> grid1 = this->blockToBool(NNB1);
     vector<vector<bool>> grid2 = this->blockToBool(NNB2);
-    int c1 = getColour(NNB1.getType());
-    int c2 = getColour(NNB2.getType());
+    int c1 = getColour(NNB1.getType(), false);
+    int c2 = getColour(NNB2.getType(), false);
     for (int row = 0; row < 4; ++row) {
         
         for (int col = 0; col < 4; ++col) {
@@ -116,11 +118,11 @@ void GraphicsDisplay::printGraphics() {
     for (int i = 0; i < 18; ++i) {
         for (int j = 0; j < 11; ++j) {
             if (theDisplay1[i][j] == ' ' || theDisplay1[i][j] == '.') continue;
-            xwindow->fillRectangle(j * unit, i * unit + 2 * textWidth, unit, unit, getColour(theDisplay1[i][j]));
+            xwindow->fillRectangle(j * unit, i * unit + 2 * textWidth, unit, unit, getColour(theDisplay1[i][j], false));
         }
         for (int j = 0; j < 11; ++j) {
             if (theDisplay2[i][j] == ' ' || theDisplay2[i][j] == '.') continue;
-            xwindow->fillRectangle(boardWidth + space + j * unit, i * unit + 2 * textWidth, unit, unit, getColour(theDisplay2[i][j]));
+            xwindow->fillRectangle(boardWidth + space + j * unit, i * unit + 2 * textWidth, unit, unit, getColour(theDisplay2[i][j], false));
         }
     }
 
@@ -140,14 +142,14 @@ void GraphicsDisplay::graphicsPrintLevelScore() {
     xwindow->drawBigString(textOffset, textOffset + textWidth, "Score: " + to_string(score_1), 1);
     xwindow->drawBigString(textOffset + boardWidth + space, textOffset + textWidth, "Score: " + to_string(score_2), 1);
 }
-void GraphicsDisplay::graphicsPrintCell(int player, int row, int col, char type) {
+void GraphicsDisplay::graphicsPrintCell(int player, int row, int col, char type, bool hidden) {
     int j = col;
     if (!isActive) return;
     int i = row;
     if (player == 1) {
-        xwindow->fillRectangle(j * unit, i * unit + 2 * textWidth, unit, unit, getColour(type));
+        xwindow->fillRectangle(j * unit, i * unit + 2 * textWidth, unit, unit, getColour(type, hidden));
     } else {
-        xwindow->fillRectangle(boardWidth + space + j * unit, i * unit + 2 * textWidth, unit, unit, getColour(type));
+        xwindow->fillRectangle(boardWidth + space + j * unit, i * unit + 2 * textWidth, unit, unit, getColour(type, hidden));
     }
 }
 void GraphicsDisplay::graphicsPrintNextBlock() {
@@ -165,7 +167,7 @@ void GraphicsDisplay::update(Info info) {
         score_1 = info.score;
         NNB1 = info.NNB;
         this->graphicsPrintLevelScore();
-        this->graphicsPrintCell(1, info.row, info.col, info.type);
+        this->graphicsPrintCell(1, info.row, info.col, info.type, info.hidden);
         this->graphicsPrintNextBlock();
     } else if (info.player == 2) {
         theDisplay2[info.row][info.col] = info.type== ' ' ? '.' : info.type;
@@ -173,7 +175,7 @@ void GraphicsDisplay::update(Info info) {
         score_2 = info.score;
         NNB2 = info.NNB;
         this->graphicsPrintLevelScore();
-        this->graphicsPrintCell(2, info.row, info.col, info.type);
+        this->graphicsPrintCell(2, info.row, info.col, info.type, info.hidden);
         this->graphicsPrintNextBlock();
     } else {
         cout << "Error: GraphicsDisplay::notify player is not 1 or 2" << endl;
