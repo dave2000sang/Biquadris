@@ -6,7 +6,7 @@
 #include "reduce_effect.h"
 using namespace std;
 
-GameState::GameState(int startlevel, string file1, string file2, bool graphicsActive) : startlevel{startlevel}, curhighscore{0},
+GameState::GameState(int startlevel, string file1, string file2, bool graphicsActive) : file1{file1}, file2{file2}, startlevel{startlevel}, curhighscore{0},
 
     p1{make_shared<Player>(file1, startlevel)}, p2{make_shared<Player>(file2, startlevel)}, turn{0}, td{make_unique<TextDisplay>()}, gd{make_unique<GraphicsDisplay>(graphicsActive)}, graphicsActive{graphicsActive} {}
 
@@ -170,4 +170,13 @@ void GameState::makeEffect(int targetPlayer){
         }
     }
     turn --;
+}
+
+void GameState::restart() {
+    curhighscore = 0;
+    turn = 0;
+    p1 = shared_ptr<Player>(new Player{file1, startlevel});
+    p2 = shared_ptr<Player>(new Player{file2, startlevel});
+    td = unique_ptr<TextDisplay>(new TextDisplay{});
+    gd = unique_ptr<GraphicsDisplay>(new GraphicsDisplay{graphicsActive});
 }

@@ -5,7 +5,7 @@
 #include <algorithm>
 using namespace std;
 
-Game::Game(int startlevel, string file1, string file2, bool graphicsActive) : file1{file1}, file2{file2}, startlevel{startlevel}, game{make_shared<GameState>(startlevel, file1, file2, graphicsActive)}, highScore{0}, graphicsActive{graphicsActive} {
+Game::Game(int startlevel, string file1, string file2, bool graphicsActive) : file1{file1}, file2{file2}, startlevel{startlevel}, game{make_unique<GameState>(startlevel, file1, file2, graphicsActive)}, highScore{0}, graphicsActive{graphicsActive} {
     game->attachToSubjects();
     game->td->print();
     game->gd->printGraphics();
@@ -158,7 +158,8 @@ void Game::play() {
 }
 
 void Game::restart() {
-    game.reset(new GameState{startlevel, file1, file2, graphicsActive});
+    // game = unique_ptr<GameState> (new GameState{startlevel, file1, file2, graphicsActive});
+    game->restart();
     game->attachToSubjects();
     game->td->print();
     game->gd->printGraphics();
