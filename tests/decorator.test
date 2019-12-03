@@ -1,1 +1,1 @@
--text -scriptfile1 tests/decorator.script
+ -scriptfile1 tests/decorator.script -scriptfile2 sequence1.txt
