@@ -53,6 +53,7 @@ int GraphicsDisplay::getColour(char type, bool hidden) {
 
 vector<vector<bool>> GraphicsDisplay::blockToBool(Block b) {
     vector<vector<bool>> grid(4);
+    vector<vector <bool>> tempCells = b.getCells();
     int w = b.getW();
     int h = b.getH();
     vector<vector<bool>> cells = b.getCells();
@@ -64,9 +65,9 @@ vector<vector<bool>> GraphicsDisplay::blockToBool(Block b) {
         }
     }
 
-    for (int row = 0; row < h; ++row) {
-        for (int col = 0; col < w; col++) {
-            if (cells[row][col]) {
+    for (int row = 0; row < tempCells.size(); ++row) {
+        for (int col = 0; col < tempCells.at(0).size(); col++) {
+            if (tempCells.at(row).at(col)) {
                 grid[row][col] = true;
             } 
         }
