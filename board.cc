@@ -119,7 +119,7 @@ vector<vector<Cell>> Board::getBoard(){
     return theBoard;
 }
 
-void Board::dropStar() {
+int Board::dropStar() {
     bool flag = false;
     for (int i = height - 1; i >= 0; i--) {
         if (theBoard[i][5].type == ' ') {
@@ -133,6 +133,7 @@ void Board::dropStar() {
     if (!flag) {
         throw string("Game Over");
     }
+    return this->clearLines();
 }
 
 void Board::erase(const Block b) {

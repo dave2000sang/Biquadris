@@ -21,7 +21,7 @@ class Board {
     std::vector<int> getIDs(); // unique IDs without 0
     void init(int width = 11, int height = 18);
     std::vector<std::vector<Cell>> getBoard();
-    void dropStar();
+    int dropStar();
     void erase(const Block b);
     void draw(const Block b, int ID);
     void attachObserver(Observer<Info>* gs);

@@ -156,6 +156,19 @@ int Player::drop(){
     board->erase(nextBlock);
     int linesCleared = board->drop(nextBlock, blockID);
     blockID++;
+
+    if(level == 4){
+        if(linesCleared == 0){
+            starCounter++;
+        } else{
+            starCounter = 0;
+        }
+
+        if(starCounter % 5 == 0 && starCounter > 0){
+            linesCleared += board->dropStar();
+        }
+    }
+
     score += this->calculateScore(linesCleared);
 
     nextBlock = nextNextBlock;
@@ -167,17 +180,6 @@ int Player::drop(){
 
     board->draw(nextBlock, blockID);
 
-    if(level == 4){
-        if(linesCleared == 0){
-            starCounter++;
-        } else{
-            starCounter = 0;
-        }
-
-        if(starCounter % 5 == 0 && starCounter > 0){
-            board->dropStar();
-        }
-    }
     return linesCleared;
 }
 
